@@ -636,7 +636,7 @@ function goPayPal(id,name,amount){
 // PAYPAL SDK
 function loadPayPal(){
   var s=document.createElement('script');
-  s.src='https://www.paypal.com/sdk/js?client-id=ENfnaFThD2nf0YoiyfzhhiavBXa7UPHhcqgqqEs5e3-SNWFM0MMisIanP2-Z9vD1HErX7GL_wl_JRzUZ&currency=USD&intent=capture&components=buttons';
+  s.src='https://www.paypal.com/sdk/js?client-id=BAA2Lq3oRsosuh32Q2JWRwwMkWywfTGTpCjX_9VkiDBlfD80JDjOKl6xGE6tKpOUrrE-3aZPoHctKTeBuY&currency=USD&intent=capture&components=buttons';
   s.onload=function(){renderPayPal();};
   s.onerror=function(){document.getElementById('pp-container').innerHTML='<div class="pp-error">⚠️ PayPal could not load. Check your internet connection and try again.</div>';};
   document.head.appendChild(s);
