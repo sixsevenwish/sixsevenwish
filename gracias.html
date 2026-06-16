@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Well Has Heard Your Wish | 6-7 Wish</title>
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'GA_MEASUREMENT_ID');
+</script>
+
+<!-- Meta Pixel - Purchase event fires only here -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', 'META_PIXEL_ID');
+fbq('track', 'PageView');
+</script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cinzel+Decorative:wght@400;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: #060E22;
+  color: #fff;
+  font-family: 'Crimson Text', Georgia, serif;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+canvas#bg { position: fixed; inset: 0; z-index: 0; }
+.page {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 3rem 2rem;
+  max-width: 600px;
+}
+.emblem {
+  width: 110px; height: 110px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fff8dc, #FFD700 25%, #D4AF37 55%, #a07820 80%);
+  border: 4px solid #FFD700;
+  box-shadow: 0 0 40px rgba(255,215,0,0.8), 0 0 80px rgba(212,175,55,0.5);
+  display: flex; align-items: center; justify-content: center; flex-direction: column;
+  margin: 0 auto 2.5rem;
+  animation: emblemFloat 3s ease-in-out infinite;
+}
+@keyframes emblemFloat {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+.emblem-text {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1.8rem; font-weight: 900;
+  color: #060E22; line-height: 1; letter-spacing: -2px;
+}
+.emblem-sub {
+  font-family: 'Cinzel', serif; font-size: 0.5rem;
+  letter-spacing: 3px; color: #060E22; margin-top: 2px;
+}
+h1 {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(1.8rem, 5vw, 2.5rem); font-weight: 900;
+  background: linear-gradient(180deg, #fff8dc, #FFD700 40%, #D4AF37);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  margin-bottom: 1.5rem; line-height: 1.2;
+  filter: drop-shadow(0 0 20px rgba(212,175,55,0.5));
+}
+.wish-card {
+  background: linear-gradient(135deg, rgba(13,27,61,0.95), rgba(30,77,154,0.3));
+  border: 2px solid rgba(212,175,55,0.5);
+  border-radius: 16px; padding: 2rem;
+  margin: 1.5rem 0;
+  position: relative; overflow: hidden;
+}
+.wish-card::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, #FFD700, transparent);
+}
+.wish-card p {
+  font-size: 1.2rem; line-height: 1.8;
+  color: rgba(255,255,255,0.85); font-style: italic;
+  margin-bottom: 1rem;
+}
+.wish-card p:last-child { margin-bottom: 0; }
+.water-emoji { font-size: 2.5rem; margin-bottom: 1rem; display: block; }
+.btn-home {
+  display: inline-block; margin-top: 2rem;
+  padding: 1rem 2.5rem;
+  background: linear-gradient(135deg, #a07820, #D4AF37, #FFD700, #D4AF37, #a07820);
+  border: 2px solid #FFD700; border-radius: 10px;
+  color: #060E22; font-family: 'Cinzel', serif;
+  font-size: 0.85rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+  text-decoration: none; cursor: pointer;
+  box-shadow: 0 0 20px rgba(212,175,55,0.4);
+  transition: all 0.3s;
+}
+.btn-home:hover { box-shadow: 0 0 35px rgba(255,215,0,0.7); transform: translateY(-2px); }
+.tagline {
+  font-family: 'Cinzel', serif; font-size: 0.7rem;
+  letter-spacing: 3px; text-transform: uppercase;
+  color: rgba(212,175,55,0.6); margin-top: 2rem;
+}
+.particle-f { position: fixed; border-radius: 50%; pointer-events: none; z-index: 2; }
+</style>
+</head>
+<body>
+
+<canvas id="bg"></canvas>
+
+<div class="page" id="page">
+  <div class="emblem" id="emblem">
+    <span class="emblem-text">6·7</span>
+    <span class="emblem-sub">✦ WISH ✦</span>
+  </div>
+
+  <span class="water-emoji">🌊✨</span>
+  <h1 id="title">The Well Has Heard<br>Your Wish</h1>
+
+  <div class="wish-card" id="wish-card">
+    <p>Your wish has been cast into the waters of possibility.</p>
+    <p>Thank you for participating in the Six Seven Wish experience.</p>
+    <p style="font-size:0.9rem;color:rgba(212,175,55,0.8);font-family:'Cinzel',serif;letter-spacing:1px;">
+      ✦ May the well carry your wish forward ✦
+    </p>
+  </div>
+
+  <a href="/" class="btn-home">✦ Return to the Well</a>
+
+  <p class="tagline">© 2026 Milkox Group LLC · Digital Entertainment Experience</p>
+</div>
+
+<script>
+// Track purchase
+const params = new URLSearchParams(window.location.search);
+const txnId = params.get('txn');
+const level = params.get('level');
+const amounts = { hope: 3, dream: 5, destiny: 12 };
+const amount = amounts[level] || 3;
+
+if (typeof fbq !== 'undefined' && txnId) {
+  fbq('track', 'Purchase', {
+    value: amount,
+    currency: 'USD',
+    transaction_id: txnId,
+    content_name: `${level} Wish`,
+    content_type: 'product'
+  });
+}
+if (typeof gtag !== 'undefined' && txnId) {
+  gtag('event', 'purchase', {
+    transaction_id: txnId,
+    value: amount,
+    currency: 'USD'
+  });
+}
+
+// Starfield
+const canvas = document.getElementById('bg');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+const stars = Array.from({length:200}, () => ({
+  x: Math.random()*canvas.width, y: Math.random()*canvas.height,
+  r: Math.random()*1.5, t: Math.random()*Math.PI*2
+}));
+(function draw() {
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  stars.forEach(s => {
+    s.t += 0.015;
+    ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+    ctx.fillStyle = `rgba(212,175,55,${(Math.sin(s.t)*0.4+0.6)*0.8})`;
+    ctx.fill();
+  });
+  requestAnimationFrame(draw);
+})();
+
+// Entrance
+gsap.from('#emblem', { scale: 0, opacity: 0, duration: 1, ease: 'back.out(2)', delay: 0.3 });
+gsap.from('#title', { y: 30, opacity: 0, duration: 0.8, delay: 0.8 });
+gsap.from('#wish-card', { y: 30, opacity: 0, duration: 0.8, delay: 1.1 });
+
+// Celebration particles
+function spawnParticle() {
+  const p = document.createElement('div');
+  p.className = 'particle-f';
+  const size = Math.random()*6+2;
+  const colors = ['#FFD700','#D4AF37','#4a90e2','#fff'];
+  p.style.cssText = `width:${size}px;height:${size}px;background:${colors[Math.floor(Math.random()*colors.length)]};
+    left:${Math.random()*100}%;top:-10px;box-shadow:0 0 ${size*2}px currentColor;`;
+  document.body.appendChild(p);
+  gsap.to(p, { y: window.innerHeight+20, x: (Math.random()-0.5)*200, rotation: Math.random()*720,
+    duration: 3+Math.random()*2, ease: 'power1.in', opacity: 0, onComplete: () => p.remove() });
+}
+for(let i=0;i<50;i++) setTimeout(spawnParticle, i*80);
+</script>
+</body>
+</html>

@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — 6-7 Wish</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--gold:#D4AF37;--bg:#0a0f1e;--card:#111827;--border:#1f2937;--text:#e5e7eb;--muted:#6b7280}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;min-height:100vh}
+.login-wrap{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:2rem}
+.login-box{background:var(--card);border:1px solid var(--gold);border-radius:16px;padding:2.5rem 2rem;width:100%;max-width:380px}
+.login-title{font-family:'Cinzel',serif;font-size:1.5rem;color:var(--gold);text-align:center;margin-bottom:2rem}
+.form-g{margin-bottom:1rem}
+.form-g label{display:block;font-size:0.75rem;letter-spacing:1px;text-transform:uppercase;color:var(--muted);margin-bottom:0.4rem}
+.form-g input{width:100%;background:#1f2937;border:1px solid #374151;border-radius:8px;color:var(--text);padding:0.8rem 1rem;font-size:0.95rem;outline:none;transition:border-color 0.2s}
+.form-g input:focus{border-color:var(--gold)}
+.btn-login{width:100%;padding:0.9rem;background:linear-gradient(135deg,#a07820,#D4AF37,#FFD700,#D4AF37,#a07820);border:none;border-radius:8px;color:#0a0f1e;font-family:'Cinzel',serif;font-size:0.85rem;font-weight:700;letter-spacing:2px;cursor:pointer;margin-top:0.5rem}
+.btn-login:hover{opacity:0.9}
+.err{color:#ef4444;font-size:0.8rem;text-align:center;margin-top:0.5rem}
+
+/* Dashboard */
+.dash{display:none;min-height:100vh}
+.topbar{background:var(--card);border-bottom:1px solid var(--border);padding:1rem 2rem;display:flex;align-items:center;justify-content:space-between}
+.topbar-brand{font-family:'Cinzel',serif;font-size:1.2rem;color:var(--gold)}
+.btn-logout{background:transparent;border:1px solid #374151;color:var(--muted);padding:0.4rem 1rem;border-radius:6px;cursor:pointer;font-size:0.8rem}
+.btn-logout:hover{border-color:var(--gold);color:var(--gold)}
+.main-dash{padding:2rem;max-width:1200px;margin:0 auto}
+.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin-bottom:2rem}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.5rem}
+.stat-label{font-size:0.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);margin-bottom:0.5rem}
+.stat-value{font-family:'Cinzel',serif;font-size:2rem;font-weight:700;color:var(--gold)}
+.stat-sub{font-size:0.75rem;color:var(--muted);margin-top:0.3rem}
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem;flex-wrap:wrap;gap:1rem}
+.section-title{font-family:'Cinzel',serif;font-size:1rem;color:var(--gold)}
+.controls{display:flex;gap:0.7rem;flex-wrap:wrap}
+.search-input{background:#1f2937;border:1px solid #374151;border-radius:8px;color:var(--text);padding:0.5rem 1rem;font-size:0.85rem;outline:none;min-width:200px}
+.search-input:focus{border-color:var(--gold)}
+.filter-select{background:#1f2937;border:1px solid #374151;border-radius:8px;color:var(--text);padding:0.5rem 0.8rem;font-size:0.85rem;outline:none}
+.btn-export{background:transparent;border:1px solid var(--gold);color:var(--gold);padding:0.5rem 1.2rem;border-radius:8px;cursor:pointer;font-size:0.8rem;letter-spacing:1px;text-transform:uppercase}
+.btn-export:hover{background:rgba(212,175,55,0.1)}
+.table-wrap{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:auto}
+table{width:100%;border-collapse:collapse;min-width:900px}
+thead tr{border-bottom:1px solid var(--border)}
+th{padding:0.9rem 1rem;text-align:left;font-size:0.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--muted);cursor:pointer;user-select:none}
+th:hover{color:var(--gold)}
+td{padding:0.9rem 1rem;font-size:0.85rem;border-bottom:1px solid rgba(255,255,255,0.03)}
+tr:last-child td{border-bottom:none}
+tr:hover td{background:rgba(255,255,255,0.02)}
+.badge{display:inline-block;padding:0.2rem 0.7rem;border-radius:20px;font-size:0.7rem;letter-spacing:1px;text-transform:uppercase;font-weight:600}
+.badge-hope{background:rgba(59,130,246,0.2);color:#60a5fa;border:1px solid rgba(59,130,246,0.3)}
+.badge-dream{background:rgba(139,92,246,0.2);color:#a78bfa;border:1px solid rgba(139,92,246,0.3)}
+.badge-destiny{background:rgba(212,175,55,0.2);color:#D4AF37;border:1px solid rgba(212,175,55,0.3)}
+.badge-completed{background:rgba(34,197,94,0.2);color:#4ade80;border:1px solid rgba(34,197,94,0.3)}
+.badge-pending{background:rgba(234,179,8,0.2);color:#facc15;border:1px solid rgba(234,179,8,0.3)}
+.pagination{display:flex;align-items:center;justify-content:center;gap:0.5rem;margin-top:1.5rem;flex-wrap:wrap}
+.page-btn{background:transparent;border:1px solid #374151;color:var(--muted);width:36px;height:36px;border-radius:8px;cursor:pointer;font-size:0.85rem;transition:all 0.2s}
+.page-btn:hover,.page-btn.active{border-color:var(--gold);color:var(--gold)}
+.wish-preview{max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--muted)}
+</style>
+</head>
+<body>
+
+<!-- LOGIN -->
+<div class="login-wrap" id="login-wrap">
+  <div class="login-box">
+    <h1 class="login-title">⚙ Admin Panel</h1>
+    <div class="form-g">
+      <label>Username</label>
+      <input type="text" id="admin-user" placeholder="admin">
+    </div>
+    <div class="form-g">
+      <label>Password</label>
+      <input type="password" id="admin-pass" placeholder="••••••••" onkeydown="if(event.key==='Enter')doLogin()">
+    </div>
+    <button class="btn-login" onclick="doLogin()">Enter</button>
+    <p class="err" id="login-err"></p>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div class="dash" id="dashboard">
+  <div class="topbar">
+    <span class="topbar-brand">6·7 WISH — Admin</span>
+    <button class="btn-logout" onclick="doLogout()">Logout</button>
+  </div>
+
+  <div class="main-dash">
+    <!-- Stats -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-label">Total Wishes</div>
+        <div class="stat-value" id="stat-total">—</div>
+        <div class="stat-sub">All time</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Total Revenue</div>
+        <div class="stat-value" id="stat-revenue">—</div>
+        <div class="stat-sub">All time</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Today</div>
+        <div class="stat-value" id="stat-today">—</div>
+        <div class="stat-sub">Revenue today</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">This Month</div>
+        <div class="stat-value" id="stat-month">—</div>
+        <div class="stat-sub">Revenue this month</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-label">Avg. Order</div>
+        <div class="stat-value" id="stat-avg">—</div>
+        <div class="stat-sub">Per wish</div>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <div class="section-header">
+      <span class="section-title">Wish Ledger</span>
+      <div class="controls">
+        <input class="search-input" id="search-input" placeholder="Search name, wish, txn..." oninput="filterTable()">
+        <select class="filter-select" id="level-filter" onchange="filterTable()">
+          <option value="">All Levels</option>
+          <option value="hope">Hope</option>
+          <option value="dream">Dream</option>
+          <option value="destiny">Destiny</option>
+        </select>
+        <select class="filter-select" id="status-filter" onchange="filterTable()">
+          <option value="">All Status</option>
+          <option value="COMPLETED">Completed</option>
+          <option value="PENDING">Pending</option>
+        </select>
+        <button class="btn-export" onclick="exportCSV()">↓ Export CSV</button>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <table id="wish-table">
+        <thead>
+          <tr>
+            <th onclick="sortTable('created_at')">Date ↕</th>
+            <th onclick="sortTable('first_name')">First Name ↕</th>
+            <th onclick="sortTable('last_name')">Last Name ↕</th>
+            <th>Wish</th>
+            <th onclick="sortTable('wish_level')">Level ↕</th>
+            <th onclick="sortTable('amount')">Amount ↕</th>
+            <th>Transaction ID</th>
+            <th onclick="sortTable('status')">Status ↕</th>
+          </tr>
+        </thead>
+        <tbody id="table-body">
+          <tr><td colspan="8" style="text-align:center;color:#4b5563;padding:3rem">Loading wishes…</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="pagination" id="pagination"></div>
+  </div>
+</div>
+
+<script>
+// ── DEMO DATA (replace with real API fetch) ──
+const DEMO_WISHES = [
+  {id:1,created_at:'2026-06-14 09:12:33',first_name:'Maria',last_name:'Garcia',wish_text:'I wish for health and happiness for my whole family this year.',wish_level:'destiny',amount:12,paypal_transaction_id:'TXN9A2B3C4D5',status:'COMPLETED'},
+  {id:2,created_at:'2026-06-14 10:05:17',first_name:'James',last_name:'Wilson',wish_text:'May my business grow and prosper beyond my wildest dreams.',wish_level:'dream',amount:5,paypal_transaction_id:'TXN1E2F3G4H',status:'COMPLETED'},
+  {id:3,created_at:'2026-06-13 15:44:22',first_name:'Sofia',last_name:'Martinez',wish_text:'I wish to find true love and build a beautiful life.',wish_level:'hope',amount:3,paypal_transaction_id:'TXN7I8J9K0L',status:'COMPLETED'},
+  {id:4,created_at:'2026-06-13 11:30:09',first_name:'David',last_name:'Chen',wish_text:'Please bring peace and joy to my household.',wish_level:'destiny',amount:12,paypal_transaction_id:'TXN2M3N4O5P',status:'COMPLETED'},
+  {id:5,created_at:'2026-06-12 18:22:41',first_name:'Emily',last_name:'Johnson',wish_text:'I wish for my children to be safe and successful.',wish_level:'dream',amount:5,paypal_transaction_id:'PENDING',status:'PENDING'},
+  {id:6,created_at:'2026-06-11 08:14:55',first_name:'Carlos',last_name:'Rodriguez',wish_text:'May fortune smile upon me and open new doors.',wish_level:'hope',amount:3,paypal_transaction_id:'TXN6Q7R8S9T',status:'COMPLETED'},
+];
+
+let allWishes = [...DEMO_WISHES];
+let filtered = [...allWishes];
+let sortKey = 'created_at', sortDir = -1;
+let page = 1;
+const perPage = 10;
+
+// ── AUTH ──
+function doLogin() {
+  const u = document.getElementById('admin-user').value;
+  const p = document.getElementById('admin-pass').value;
+  // Replace with real auth check via API
+  if (u === 'admin' && p === 'wish2026!') {
+    document.getElementById('login-wrap').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'block';
+    loadData();
+  } else {
+    document.getElementById('login-err').textContent = 'Invalid credentials.';
+  }
+}
+function doLogout() {
+  document.getElementById('login-wrap').style.display = 'flex';
+  document.getElementById('dashboard').style.display = 'none';
+  document.getElementById('admin-user').value = '';
+  document.getElementById('admin-pass').value = '';
+}
+
+// ── DATA ──
+function loadData() {
+  // In production: fetch('/sadmin/api/wishes.php').then(r=>r.json()).then(d=>{allWishes=d;render()})
+  allWishes = [...DEMO_WISHES];
+  filtered = [...allWishes];
+  updateStats();
+  renderTable();
+}
+
+function updateStats() {
+  const completed = allWishes.filter(w=>w.status==='COMPLETED');
+  const total = completed.reduce((s,w)=>s+parseFloat(w.amount),0);
+  const today = new Date().toISOString().slice(0,10);
+  const todayRev = completed.filter(w=>w.created_at.startsWith(today)).reduce((s,w)=>s+parseFloat(w.amount),0);
+  const month = new Date().toISOString().slice(0,7);
+  const monthRev = completed.filter(w=>w.created_at.startsWith(month)).reduce((s,w)=>s+parseFloat(w.amount),0);
+  const avg = completed.length ? total/completed.length : 0;
+
+  document.getElementById('stat-total').textContent = allWishes.length;
+  document.getElementById('stat-revenue').textContent = '$'+total.toFixed(2);
+  document.getElementById('stat-today').textContent = '$'+todayRev.toFixed(2);
+  document.getElementById('stat-month').textContent = '$'+monthRev.toFixed(2);
+  document.getElementById('stat-avg').textContent = '$'+avg.toFixed(2);
+}
+
+function filterTable() {
+  const q = document.getElementById('search-input').value.toLowerCase();
+  const lf = document.getElementById('level-filter').value;
+  const sf = document.getElementById('status-filter').value;
+  filtered = allWishes.filter(w => {
+    const matchQ = !q || [w.first_name,w.last_name,w.wish_text,w.paypal_transaction_id].some(f=>f&&f.toLowerCase().includes(q));
+    const matchL = !lf || w.wish_level === lf;
+    const matchS = !sf || w.status === sf;
+    return matchQ && matchL && matchS;
+  });
+  page = 1;
+  renderTable();
+}
+
+function sortTable(key) {
+  if (sortKey === key) sortDir *= -1;
+  else { sortKey = key; sortDir = 1; }
+  filtered.sort((a,b) => {
+    const av = a[key]||'', bv = b[key]||'';
+    return av < bv ? -sortDir : av > bv ? sortDir : 0;
+  });
+  renderTable();
+}
+
+function renderTable() {
+  const start = (page-1)*perPage;
+  const rows = filtered.slice(start, start+perPage);
+  const tbody = document.getElementById('table-body');
+  if (!rows.length) {
+    tbody.innerHTML = '<tr><td colspan="8" style="text-align:center;color:#4b5563;padding:2rem">No wishes found.</td></tr>';
+  } else {
+    tbody.innerHTML = rows.map(w => `
+      <tr>
+        <td>${w.created_at.slice(0,16)}</td>
+        <td>${esc(w.first_name)}</td>
+        <td>${esc(w.last_name)}</td>
+        <td><span class="wish-preview" title="${esc(w.wish_text)}">${esc(w.wish_text)}</span></td>
+        <td><span class="badge badge-${w.wish_level}">${cap(w.wish_level)}</span></td>
+        <td>$${parseFloat(w.amount).toFixed(2)}</td>
+        <td style="font-size:0.75rem;color:#6b7280">${esc(w.paypal_transaction_id)}</td>
+        <td><span class="badge badge-${w.status.toLowerCase()}">${w.status}</span></td>
+      </tr>
+    `).join('');
+  }
+  renderPagination();
+}
+
+function renderPagination() {
+  const total = Math.ceil(filtered.length / perPage);
+  const pag = document.getElementById('pagination');
+  if (total <= 1) { pag.innerHTML=''; return; }
+  let html = '';
+  for (let i = 1; i <= total; i++) {
+    html += `<button class="page-btn${i===page?' active':''}" onclick="gotoPage(${i})">${i}</button>`;
+  }
+  pag.innerHTML = html;
+}
+
+function gotoPage(p) { page = p; renderTable(); }
+
+function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function cap(s) { return s ? s.charAt(0).toUpperCase()+s.slice(1) : ''; }
+
+function exportCSV() {
+  const headers = ['ID','Date','First Name','Last Name','Wish','Level','Amount','Transaction ID','Status'];
+  const rows = filtered.map(w => [
+    w.id, w.created_at, w.first_name, w.last_name,
+    `"${(w.wish_text||'').replace(/"/g,'""')}"`,
+    w.wish_level, w.amount, w.paypal_transaction_id, w.status
+  ]);
+  const csv = [headers, ...rows].map(r=>r.join(',')).join('\n');
+  const a = document.createElement('a');
+  a.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+  a.download = `wishes_${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+}
+</script>
+</body>
+</html>

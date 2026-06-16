@@ -1,0 +1,2334 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>6-7 Wish | Your Digital Wishing Well</title>
+<meta name="description" content="Make your wish at the 6-7 Digital Wishing Well. A premium magical entertainment experience. Thousands of wishes placed. Today is your turn.">
+<meta property="og:title" content="6-7 Wish | Your Digital Wishing Well">
+<meta property="og:description" content="Cast your wish into the well of possibility. A magical digital entertainment experience.">
+<meta property="og:url" content="https://www.sixsevenwish.com">
+
+<!-- Google Analytics Placeholder -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'GA_MEASUREMENT_ID');
+</script>
+
+<!-- Meta Pixel Placeholder -->
+<script>
+!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
+n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
+document,'script','https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', 'META_PIXEL_ID');
+fbq('track', 'PageView');
+</script>
+
+<!-- PayPal SDK -->
+<script src="https://www.paypal.com/sdk/js?client-id=ENfnaFThD2nf0YoiyfzhhiavBXa7UPHhcqgqqEs5e3-SNWFM0MMisIanP2-Z9vD1HErX7GL_wl_JRzUZ&currency=USD&intent=capture"></script>
+
+<!-- GSAP -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/MotionPathPlugin.min.js"></script>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700;900&family=Cinzel+Decorative:wght@400;700;900&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --deep-blue: #0D1B3D;
+  --magic-blue: #1E4D9A;
+  --gold: #D4AF37;
+  --bright-gold: #FFD700;
+  --white: #FFFFFF;
+  --dark-navy: #060E22;
+  --glow-gold: rgba(212,175,55,0.6);
+  --glow-blue: rgba(30,77,154,0.6);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--dark-navy);
+  color: var(--white);
+  font-family: 'Crimson Text', Georgia, serif;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ═══ STARFIELD BG ═══ */
+#starfield {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ═══ MAIN WRAPPER ═══ */
+.site-wrapper {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  background: radial-gradient(ellipse at 50% 0%, #1a3a7a 0%, #0D1B3D 40%, #060E22 100%);
+}
+
+/* ═══ HEADER / LOGO ═══ */
+.site-header {
+  text-align: center;
+  padding: 0 1rem 0;
+  position: relative;
+  /* Golden ornate top border matching reference image */
+  background: linear-gradient(180deg,
+    #3a2200 0%,
+    #6b3d00 8%,
+    #c8860a 18%,
+    #f0c030 28%,
+    #ffe066 35%,
+    #f0c030 42%,
+    #b07010 52%,
+    #7a4800 62%,
+    #4a2800 75%,
+    rgba(13,27,61,0) 100%
+  );
+  padding-top: 18px;
+  padding-bottom: 10px;
+  margin-bottom: 0;
+  position: relative;
+  overflow: visible;
+}
+
+/* Decorative gold scallop border top */
+.site-header::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 12px;
+  background:
+    radial-gradient(ellipse 18px 14px at 0px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 18px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 36px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 54px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 72px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 90px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 108px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 126px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 144px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 162px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 180px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 198px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 216px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 234px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 252px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 270px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 288px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 306px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 324px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 342px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 360px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 378px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 396px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 414px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 432px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 450px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 468px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 486px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 504px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 522px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 540px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 558px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 576px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 594px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 612px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 630px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 648px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 666px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 684px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 702px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 720px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 738px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 756px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 774px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 792px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 810px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 828px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 846px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 864px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 882px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 900px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 918px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 936px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 954px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 972px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 990px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 1008px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 1026px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 1044px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 1062px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 1080px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 1098px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 1116px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 1134px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 1152px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 1170px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 1188px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 1206px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 1224px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 1242px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 1260px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 1278px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 1296px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 1314px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 1332px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 1350px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 1368px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 1386px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 1404px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 1422px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 1440px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 1458px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 1476px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 1494px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 1512px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 1530px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 1548px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 1566px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 1584px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 1602px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 1620px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 1638px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 1656px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 1674px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 1692px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 1710px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 1728px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 1746px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 1764px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 1782px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 1800px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 1818px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 1836px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 1854px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 1872px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 1890px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 1908px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 1926px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 1944px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 1962px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 1980px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 1998px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 2016px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 2034px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 2052px 0, #FFD700 70%, transparent 71%),
+    radial-gradient(ellipse 18px 14px at 2070px 0, #FFD700 70%, transparent 71%);
+  filter: drop-shadow(0 2px 6px rgba(212,175,55,0.8));
+}
+
+/* Golden horizontal bars in header — like the image's ornate top frame */
+.site-header::after {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 100%;
+  background:
+    linear-gradient(90deg, transparent 0%, rgba(255,220,60,0.18) 20%, rgba(255,240,120,0.35) 50%, rgba(255,220,60,0.18) 80%, transparent 100%);
+  pointer-events: none;
+}
+
+.logo-emblem {
+  display: inline-block;
+  position: relative;
+  cursor: pointer;
+  margin-top: 8px;
+}
+
+/* ── COIN: outer glowing frame ── */
+.logo-coin {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  position: relative;
+  animation: logoFloat 3s ease-in-out infinite;
+  /* Multi-layer gold coin look */
+  background:
+    radial-gradient(circle at 38% 28%, #fffbe0 0%, #FFE040 18%, #D4AF37 40%, #9a7010 62%, #5a3a00 82%, #3a2000 100%);
+  box-shadow:
+    0 0 0 3px #8b5e00,
+    0 0 0 6px #D4AF37,
+    0 0 0 8px #8b5e00,
+    0 0 30px rgba(255,215,0,0.9),
+    0 0 70px rgba(212,175,55,0.5),
+    inset 0 3px 8px rgba(255,255,255,0.55),
+    inset 0 -4px 8px rgba(0,0,0,0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@keyframes logoFloat {
+  0%,100% { transform: translateY(0); filter: drop-shadow(0 0 18px rgba(255,215,0,0.8)); }
+  50%      { transform: translateY(-10px); filter: drop-shadow(0 12px 28px rgba(255,215,0,1)); }
+}
+
+/* Inner coin face */
+.logo-coin-face {
+  width: 108px;
+  height: 108px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,200,0,0.5);
+  box-shadow: inset 0 2px 6px rgba(255,255,255,0.3), inset 0 -2px 6px rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+/* SVG coin is rendered inside — see HTML */
+.logo-coin svg {
+  width: 130px;
+  height: 130px;
+  position: absolute;
+  top: 5px; left: 5px;
+}
+
+.logo-text-67 {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 2rem;
+  font-weight: 900;
+  color: var(--dark-navy);
+  text-shadow: 0 1px 0 rgba(255,255,255,0.4);
+  line-height: 1;
+  letter-spacing: -2px;
+}
+
+.logo-text-wish {
+  font-family: 'Cinzel', serif;
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 4px;
+  color: var(--dark-navy);
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+.logo-outer-ring-text {
+  position: absolute;
+  inset: -16px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ═══ HERO ═══ */
+.hero {
+  text-align: center;
+  padding: 2rem 1.5rem 1rem;
+}
+
+.hero-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  font-weight: 900;
+  background: linear-gradient(180deg, #fff8dc 0%, #FFD700 40%, #D4AF37 70%, #a07820 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-shadow: none;
+  filter: drop-shadow(0 0 20px rgba(212,175,55,0.5));
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+.hero-sub {
+  font-family: 'Crimson Text', serif;
+  font-size: clamp(1rem, 2.5vw, 1.3rem);
+  color: rgba(255,255,255,0.8);
+  max-width: 500px;
+  margin: 0 auto;
+  font-style: italic;
+  line-height: 1.6;
+}
+
+/* ═══ MAIN LAYOUT ═══ */
+.main-content {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1rem 1.5rem 3rem;
+}
+
+@media (min-width: 900px) {
+  .main-content {
+    grid-template-columns: 320px 1fr 320px;
+    align-items: start;
+    gap: 2rem;
+  }
+}
+
+/* ═══ WISH LEVELS (LEFT) ═══ */
+.wish-levels {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.wish-levels-title {
+  font-family: 'Cinzel', serif;
+  font-size: 0.75rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  text-align: center;
+  margin-bottom: 0.5rem;
+}
+
+.level-card {
+  background: linear-gradient(135deg, rgba(13,27,61,0.9), rgba(30,77,154,0.3));
+  border: 2px solid rgba(212,175,55,0.4);
+  border-radius: 12px;
+  padding: 1.2rem 1.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.level-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(212,175,55,0.1), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.level-card:hover::before, .level-card.selected::before { opacity: 1; }
+
+.level-card:hover {
+  border-color: var(--gold);
+  box-shadow: 0 0 20px rgba(212,175,55,0.3), inset 0 0 20px rgba(212,175,55,0.05);
+  transform: translateY(-2px);
+}
+
+.level-card.selected {
+  border-color: var(--bright-gold);
+  box-shadow: 0 0 30px rgba(255,215,0,0.5), inset 0 0 30px rgba(212,175,55,0.1);
+  background: linear-gradient(135deg, rgba(13,27,61,0.95), rgba(212,175,55,0.15));
+}
+
+.level-name {
+  font-family: 'Cinzel', serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.level-price {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1.8rem;
+  font-weight: 900;
+  color: var(--bright-gold);
+  filter: drop-shadow(0 0 8px rgba(255,215,0,0.5));
+}
+
+.level-desc {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.6);
+  margin-top: 0.3rem;
+  font-style: italic;
+}
+
+.level-check {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+}
+
+.level-card.selected .level-check {
+  background: var(--bright-gold);
+  border-color: var(--bright-gold);
+}
+
+.level-check::after {
+  content: '✓';
+  font-size: 0.75rem;
+  color: var(--dark-navy);
+  opacity: 0;
+  transition: opacity 0.3s;
+  font-weight: 900;
+}
+
+.level-card.selected .level-check::after { opacity: 1; }
+
+/* ═══ WELL STAGE (CENTER) ═══ */
+.well-stage {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.well-container {
+  position: relative;
+  width: 360px;
+  height: 420px;
+  max-width: 100%;
+}
+
+/* SVG Well */
+.well-svg-wrapper {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 320px;
+}
+
+/* Draggable Coin — ancient 6-7 coin style */
+#draggable-coin {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 38% 30%, #fffbe0 0%, #FFE040 18%, #D4AF37 42%, #9a7010 65%, #5a3a00 85%, #3a2000 100%);
+  box-shadow:
+    0 0 0 3px #8b5e00,
+    0 0 0 6px #D4AF37,
+    0 0 0 8px #7a5000,
+    0 0 22px rgba(255,215,0,1),
+    0 0 50px rgba(212,175,55,0.7),
+    inset 0 3px 7px rgba(255,255,255,0.55),
+    inset 0 -3px 7px rgba(0,0,0,0.5);
+  cursor: grab;
+  z-index: 10;
+  user-select: none;
+  touch-action: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: coinFloat 2.5s ease-in-out infinite;
+  overflow: hidden;
+}
+
+#draggable-coin:active { cursor: grabbing; }
+#draggable-coin.dragging { animation: none; }
+
+/* The coin SVG sits inside */
+#draggable-coin svg {
+  width: 80px;
+  height: 80px;
+  position: absolute;
+  top: 5px; left: 5px;
+}
+
+/* Keep old classes for JS compat */
+#draggable-coin .coin-inner { display: none; }
+
+@keyframes coinFloat {
+  0%,100% { transform: translateX(-50%) translateY(0) rotate(-2deg);
+             box-shadow: 0 0 0 3px #8b5e00, 0 0 0 6px #D4AF37, 0 0 0 8px #7a5000, 0 0 22px rgba(255,215,0,1), 0 0 50px rgba(212,175,55,0.7), inset 0 3px 7px rgba(255,255,255,0.55); }
+  30% { transform: translateX(-50%) translateY(-12px) rotate(2deg);
+        box-shadow: 0 0 0 3px #8b5e00, 0 0 0 6px #D4AF37, 0 0 0 8px #7a5000, 0 0 35px rgba(255,215,0,1), 0 0 70px rgba(212,175,55,0.9), inset 0 3px 7px rgba(255,255,255,0.55); }
+  70% { transform: translateX(-50%) translateY(-6px) rotate(-1deg); }
+}
+
+/* Coin trail */
+.coin-trail {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9;
+  background: radial-gradient(circle, rgba(255,215,0,0.8), transparent);
+  animation: trailFade 0.5s ease-out forwards;
+}
+
+@keyframes trailFade {
+  to { opacity: 0; transform: scale(0.3); }
+}
+
+/* Glow ring around well */
+.well-glow {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 60px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(30,77,154,0.5), transparent);
+  filter: blur(15px);
+  animation: glowPulse 3s ease-in-out infinite;
+}
+
+@keyframes glowPulse {
+  0%,100% { opacity: 0.6; transform: translateX(-50%) scale(1); }
+  50% { opacity: 1; transform: translateX(-50%) scale(1.2); }
+}
+
+/* Particles */
+.particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--bright-gold);
+  pointer-events: none;
+  z-index: 5;
+}
+
+/* Hint text */
+.drag-hint {
+  font-family: 'Cinzel', serif;
+  font-size: 0.7rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(212,175,55,0.7);
+  text-align: center;
+  margin-top: 1rem;
+  animation: hintPulse 2s ease-in-out infinite;
+}
+
+@keyframes hintPulse {
+  0%,100% { opacity: 0.5; }
+  50% { opacity: 1; }
+}
+
+/* ═══ WISH FORM (RIGHT) ═══ */
+.wish-form-panel {
+  background: linear-gradient(135deg, rgba(13,27,61,0.95), rgba(30,77,154,0.2));
+  border: 2px solid rgba(212,175,55,0.4);
+  border-radius: 16px;
+  padding: 2rem 1.5rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.wish-form-panel::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--gold), var(--bright-gold), var(--gold), transparent);
+}
+
+.form-title {
+  font-family: 'Cinzel', serif;
+  font-size: 0.75rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.form-group.full { grid-column: 1 / -1; }
+
+label {
+  font-family: 'Cinzel', serif;
+  font-size: 0.65rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+input, textarea {
+  background: rgba(6,14,34,0.8);
+  border: 1.5px solid rgba(212,175,55,0.3);
+  border-radius: 8px;
+  color: var(--white);
+  font-family: 'Crimson Text', serif;
+  font-size: 1rem;
+  padding: 0.8rem 1rem;
+  outline: none;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  width: 100%;
+}
+
+input:focus, textarea:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 15px rgba(212,175,55,0.2);
+}
+
+input::placeholder, textarea::placeholder {
+  color: rgba(255,255,255,0.3);
+  font-style: italic;
+}
+
+textarea {
+  resize: none;
+  height: 130px;
+  line-height: 1.5;
+}
+
+.char-counter {
+  text-align: right;
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.4);
+  font-family: 'Cinzel', serif;
+}
+
+.char-counter.warning { color: #ff9f43; }
+.char-counter.danger { color: #ff4757; }
+
+/* ═══ SUBMIT BUTTON ═══ */
+.btn-cast {
+  display: block;
+  width: 100%;
+  margin-top: 1.5rem;
+  padding: 1.1rem 2rem;
+  background: linear-gradient(135deg, #a07820, #D4AF37 30%, #FFD700 50%, #D4AF37 70%, #a07820);
+  border: 2px solid #FFD700;
+  border-radius: 10px;
+  color: var(--dark-navy);
+  font-family: 'Cinzel', serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 20px rgba(212,175,55,0.4);
+}
+
+.btn-cast::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.btn-cast:hover::before { opacity: 1; }
+.btn-cast:hover { box-shadow: 0 0 35px rgba(255,215,0,0.7); transform: translateY(-1px); }
+.btn-cast:active { transform: translateY(0); }
+
+.btn-cast .btn-icon { margin-right: 0.5rem; font-size: 1rem; }
+
+/* Form validation */
+input.invalid, textarea.invalid { border-color: #ff4757; }
+
+/* ═══ DECORATIVE DIVIDER ═══ */
+.gold-divider {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin: 3rem auto 2rem;
+  max-width: 500px;
+  padding: 0 1.5rem;
+}
+
+.gold-divider::before, .gold-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+
+.gold-divider-icon {
+  color: var(--gold);
+  font-size: 1.2rem;
+}
+
+/* ═══ GOLDEN FLASH OVERLAY ═══ */
+#flash-overlay {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle, rgba(255,215,0,0.9), rgba(212,175,55,0.4), transparent);
+  z-index: 100;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ═══ ENERGY WAVE ═══ */
+#energy-wave {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 3px solid var(--bright-gold);
+  z-index: 101;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ═══ MODAL ═══ */
+#modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(6,14,34,0.92);
+  z-index: 200;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  backdrop-filter: blur(8px);
+}
+
+#modal-overlay.show { display: flex; }
+
+.modal-box {
+  background: linear-gradient(135deg, #0D1B3D, #1a3a7a);
+  border: 2px solid var(--gold);
+  border-radius: 20px;
+  padding: 3rem 2.5rem;
+  max-width: 480px;
+  width: 100%;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 0 60px rgba(212,175,55,0.3), 0 0 120px rgba(30,77,154,0.3);
+  animation: modalReveal 0.5s ease-out;
+}
+
+@keyframes modalReveal {
+  from { transform: scale(0.8) translateY(20px); opacity: 0; }
+  to { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+.modal-box::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, var(--bright-gold), transparent);
+  border-radius: 20px 20px 0 0;
+}
+
+.modal-icon {
+  font-size: 3.5rem;
+  margin-bottom: 1rem;
+  display: block;
+  filter: drop-shadow(0 0 15px rgba(255,215,0,0.7));
+  animation: modalIconFloat 2s ease-in-out infinite;
+}
+
+@keyframes modalIconFloat {
+  0%,100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.modal-title {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  background: linear-gradient(180deg, #fff8dc, #FFD700, #D4AF37);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 1rem;
+  line-height: 1.3;
+}
+
+.modal-text {
+  font-family: 'Crimson Text', serif;
+  font-size: 1.1rem;
+  color: rgba(255,255,255,0.8);
+  line-height: 1.7;
+  font-style: italic;
+  margin-bottom: 2rem;
+}
+
+/* PayPal container */
+#paypal-button-container {
+  margin-bottom: 1rem;
+}
+
+.modal-disclaimer {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.4);
+  line-height: 1.5;
+}
+
+/* ═══ FOOTER ═══ */
+.site-footer {
+  background: rgba(6,14,34,0.95);
+  border-top: 1px solid rgba(212,175,55,0.2);
+  padding: 3rem 1.5rem 2rem;
+  text-align: center;
+}
+
+.footer-logo {
+  font-family: 'Cinzel Decorative', serif;
+  font-size: 1.5rem;
+  font-weight: 900;
+  background: linear-gradient(180deg, #FFD700, #D4AF37);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 1.5rem;
+}
+
+.footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem 2rem;
+  margin-bottom: 2rem;
+}
+
+.footer-links a {
+  font-family: 'Cinzel', serif;
+  font-size: 0.7rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(212,175,55,0.7);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.footer-links a:hover { color: var(--bright-gold); }
+
+.footer-info {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.5);
+  line-height: 1.8;
+  max-width: 600px;
+  margin: 0 auto 1.5rem;
+}
+
+.footer-info a { color: rgba(212,175,55,0.7); text-decoration: none; }
+
+.footer-disclaimer {
+  font-size: 0.75rem;
+  color: rgba(255,255,255,0.3);
+  max-width: 700px;
+  margin: 0 auto;
+  line-height: 1.6;
+  border-top: 1px solid rgba(212,175,55,0.1);
+  padding-top: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+/* ═══ AMBIENT PARTICLES (CSS) ═══ */
+.ambient-particle {
+  position: fixed;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 2;
+  animation: ambientFloat linear infinite;
+}
+
+@keyframes ambientFloat {
+  0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 0.6; }
+  100% { transform: translateY(-10vh) rotate(720deg); opacity: 0; }
+}
+
+/* ═══ WELL ILLUMINATION ═══ */
+.well-inner-glow {
+  position: absolute;
+  bottom: 90px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 30px;
+  border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(30,77,154,0.8), transparent);
+  filter: blur(8px);
+  opacity: 0;
+  pointer-events: none;
+  z-index: 6;
+}
+
+/* ═══ RUNIC BORDER DECORATION ═══ */
+.rune-border {
+  border: 1px solid transparent;
+  background-image: linear-gradient(var(--dark-navy), var(--dark-navy)),
+    linear-gradient(135deg, rgba(212,175,55,0.6), rgba(30,77,154,0.4), rgba(212,175,55,0.6));
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+}
+
+/* ═══ SECTION: ABOUT ═══ */
+.about-section {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  text-align: center;
+}
+
+.about-section h2 {
+  font-family: 'Cinzel', serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--gold);
+  margin-bottom: 1rem;
+}
+
+.about-section p {
+  font-family: 'Crimson Text', serif;
+  font-size: 1.1rem;
+  color: rgba(255,255,255,0.7);
+  line-height: 1.8;
+  margin-bottom: 1rem;
+}
+
+.entertainment-badge {
+  display: inline-block;
+  background: rgba(212,175,55,0.1);
+  border: 1px solid rgba(212,175,55,0.4);
+  border-radius: 20px;
+  padding: 0.4rem 1.2rem;
+  font-family: 'Cinzel', serif;
+  font-size: 0.7rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-top: 0.5rem;
+}
+
+/* ═══ RESPONSIVE ═══ */
+@media (max-width: 900px) {
+  .main-content { padding: 1rem 1rem 2rem; }
+  .well-container { width: 300px; height: 360px; }
+  .well-svg-wrapper { width: 280px; }
+  .wish-form-panel { order: -1; }
+  .wish-levels { flex-direction: row; flex-wrap: wrap; }
+  .level-card { flex: 1; min-width: 140px; }
+}
+
+@media (max-width: 480px) {
+  .logo-coin { width: 110px; height: 110px; }
+  .logo-coin svg { width: 100px; height: 100px; }
+  .form-row { grid-template-columns: 1fr; }
+  .wish-levels { flex-direction: column; }
+  #draggable-coin { width: 72px; height: 72px; }
+  #draggable-coin svg { width: 62px; height: 62px; }
+  .well-container { width: 280px; height: 320px; }
+  .well-svg-wrapper { width: 260px; }
+}
+
+/* ═══ LOADING STATE ═══ */
+.btn-cast.loading {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* ═══ SUCCESS RIPPLES ═══ */
+.ripple {
+  position: fixed;
+  border-radius: 50%;
+  border: 2px solid rgba(255,215,0,0.6);
+  pointer-events: none;
+  z-index: 102;
+  animation: rippleExpand 1.5s ease-out forwards;
+}
+
+@keyframes rippleExpand {
+  from { width: 10px; height: 10px; opacity: 1; }
+  to { width: 500px; height: 500px; opacity: 0; margin-left: -245px; margin-top: -245px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Starfield Canvas -->
+<canvas id="starfield"></canvas>
+
+<!-- Flash & Wave overlays -->
+<div id="flash-overlay"></div>
+<div id="energy-wave"></div>
+
+<!-- SITE WRAPPER -->
+<div class="site-wrapper">
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <div class="logo-emblem" id="logo-emblem">
+      <div class="logo-coin" id="logo-coin">
+        <!-- Ancient coin SVG — matching the reference image exactly -->
+        <svg viewBox="0 0 130 130" xmlns="http://www.w3.org/2000/svg" style="width:130px;height:130px;position:absolute;top:5px;left:5px;">
+          <defs>
+            <radialGradient id="coinFace" cx="40%" cy="35%" r="65%">
+              <stop offset="0%"   stop-color="#fffbe0"/>
+              <stop offset="20%"  stop-color="#FFE040"/>
+              <stop offset="50%"  stop-color="#D4AF37"/>
+              <stop offset="75%"  stop-color="#9a7010"/>
+              <stop offset="100%" stop-color="#5a3a00"/>
+            </radialGradient>
+            <radialGradient id="coinRim" cx="50%" cy="50%" r="50%">
+              <stop offset="80%"  stop-color="transparent"/>
+              <stop offset="82%"  stop-color="#8b5e00"/>
+              <stop offset="86%"  stop-color="#D4AF37"/>
+              <stop offset="90%"  stop-color="#FFE040"/>
+              <stop offset="93%"  stop-color="#D4AF37"/>
+              <stop offset="96%"  stop-color="#8b5e00"/>
+              <stop offset="100%" stop-color="#3a2000"/>
+            </radialGradient>
+            <filter id="coinGlow">
+              <feGaussianBlur stdDeviation="2" result="blur"/>
+              <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+            <filter id="emboss">
+              <feConvolveMatrix order="3" kernelMatrix="1 1 0 1 0 -1 0 -1 -1" result="emboss"/>
+              <feBlend in="SourceGraphic" in2="emboss" mode="overlay"/>
+            </filter>
+            <!-- Circular text path -->
+            <path id="circleTextPath" d="M 65,65 m -42,0 a 42,42 0 1,1 84,0 a 42,42 0 1,1 -84,0" />
+            <path id="circleTextPathBottom" d="M 65,65 m -42,0 a 42,42 0 0,0 84,0" />
+          </defs>
+
+          <!-- Coin base circle — multi-ring border -->
+          <circle cx="65" cy="65" r="60" fill="#3a2000"/>
+          <circle cx="65" cy="65" r="57" fill="#8b5e00"/>
+          <circle cx="65" cy="65" r="54" fill="#D4AF37"/>
+          <circle cx="65" cy="65" r="51" fill="#8b5e00"/>
+          <circle cx="65" cy="65" r="48" fill="url(#coinFace)"/>
+
+          <!-- Inner detail ring -->
+          <circle cx="65" cy="65" r="46" fill="none" stroke="rgba(90,58,0,0.5)" stroke-width="1"/>
+          <circle cx="65" cy="65" r="44" fill="none" stroke="rgba(255,224,64,0.3)" stroke-width="0.5"/>
+
+          <!-- Decorative outer dots on rim -->
+          <g fill="#FFE040" opacity="0.9">
+            <circle cx="65"  cy="8"   r="2"/>
+            <circle cx="96"  cy="16"  r="1.5"/>
+            <circle cx="117" cy="38"  r="1.5"/>
+            <circle cx="122" cy="65"  r="2"/>
+            <circle cx="117" cy="92"  r="1.5"/>
+            <circle cx="96"  cy="114" r="1.5"/>
+            <circle cx="65"  cy="122" r="2"/>
+            <circle cx="34"  cy="114" r="1.5"/>
+            <circle cx="13"  cy="92"  r="1.5"/>
+            <circle cx="8"   cy="65"  r="2"/>
+            <circle cx="13"  cy="38"  r="1.5"/>
+            <circle cx="34"  cy="16"  r="1.5"/>
+          </g>
+
+          <!-- Outer arc ornaments -->
+          <g stroke="#8b5e00" stroke-width="1" fill="none" opacity="0.7">
+            <path d="M 23,23 Q 65,10 107,23"/>
+            <path d="M 23,107 Q 65,120 107,107"/>
+          </g>
+
+          <!-- 6-7 WISH circular text top -->
+          <text font-family="Cinzel, serif" font-size="9.5" font-weight="700" fill="#3a2000" letter-spacing="3">
+            <textPath href="#circleTextPath" startOffset="4%">✦ 6-7 WISH ✦ 6-7 WISH</textPath>
+          </text>
+          <!-- Slight lighter version for depth -->
+          <text font-family="Cinzel, serif" font-size="9.5" font-weight="700" fill="#FFE040" letter-spacing="3" opacity="0.35">
+            <textPath href="#circleTextPath" startOffset="4%">✦ 6-7 WISH ✦ 6-7 WISH</textPath>
+          </text>
+
+          <!-- Large centered 6-7 numeral — ancient engraved style -->
+          <!-- Shadow/depth layer -->
+          <text x="66" y="59" font-family="Cinzel Decorative, serif" font-size="30" font-weight="900"
+                fill="#3a2000" text-anchor="middle" opacity="0.8">6</text>
+          <text x="66" y="90" font-family="Cinzel Decorative, serif" font-size="30" font-weight="900"
+                fill="#3a2000" text-anchor="middle" opacity="0.8">7</text>
+          <!-- Main numeral -->
+          <text x="65" y="57" font-family="Cinzel Decorative, serif" font-size="30" font-weight="900"
+                fill="#1a0e00" text-anchor="middle">6</text>
+          <text x="65" y="88" font-family="Cinzel Decorative, serif" font-size="30" font-weight="900"
+                fill="#1a0e00" text-anchor="middle">7</text>
+          <!-- Highlight layer -->
+          <text x="64" y="56" font-family="Cinzel Decorative, serif" font-size="30" font-weight="900"
+                fill="rgba(255,255,255,0.18)" text-anchor="middle">6</text>
+          <text x="64" y="87" font-family="Cinzel Decorative, serif" font-size="30" font-weight="900"
+                fill="rgba(255,255,255,0.18)" text-anchor="middle">7</text>
+
+          <!-- Dash separator between 6 and 7 -->
+          <rect x="52" y="62" width="26" height="3" rx="1.5" fill="#1a0e00" opacity="0.8"/>
+          <rect x="52" y="61.5" width="26" height="2" rx="1" fill="rgba(255,200,0,0.2)"/>
+
+          <!-- Corner ornamental stars -->
+          <text x="37" y="56" font-family="serif" font-size="8" fill="#3a2000" text-anchor="middle" opacity="0.7">✦</text>
+          <text x="93" y="56" font-family="serif" font-size="8" fill="#3a2000" text-anchor="middle" opacity="0.7">✦</text>
+          <text x="37" y="90" font-family="serif" font-size="8" fill="#3a2000" text-anchor="middle" opacity="0.7">✦</text>
+          <text x="93" y="90" font-family="serif" font-size="8" fill="#3a2000" text-anchor="middle" opacity="0.7">✦</text>
+
+          <!-- Specular highlight (top-left gleam) -->
+          <ellipse cx="45" cy="38" rx="14" ry="8" fill="rgba(255,255,255,0.22)" transform="rotate(-30,45,38)"/>
+          <ellipse cx="41" cy="35" rx="6" ry="4" fill="rgba(255,255,255,0.35)" transform="rotate(-30,41,35)"/>
+        </svg>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <h1 class="hero-title">Your Wish Starts Here</h1>
+    <p class="hero-sub">Thousands of wishes have been placed into the well.<br>Today, it's your turn.</p>
+  </section>
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+
+    <!-- LEFT: Wish Levels -->
+    <aside class="wish-levels" id="wish-levels">
+      <p class="wish-levels-title">✦ Choose Your Wish ✦</p>
+
+      <div class="level-card selected" data-level="hope" data-amount="3" onclick="selectLevel(this)">
+        <div class="level-check"></div>
+        <div class="level-name">Hope Wish</div>
+        <div class="level-price">$3</div>
+        <div class="level-desc">A spark of possibility</div>
+      </div>
+
+      <div class="level-card" data-level="dream" data-amount="5" onclick="selectLevel(this)">
+        <div class="level-check"></div>
+        <div class="level-name">Dream Wish</div>
+        <div class="level-price">$5</div>
+        <div class="level-desc">Where dreams take flight</div>
+      </div>
+
+      <div class="level-card" data-level="destiny" data-amount="12" onclick="selectLevel(this)">
+        <div class="level-check"></div>
+        <div class="level-name">Destiny Wish</div>
+        <div class="level-price">$12</div>
+        <div class="level-desc">Align with your destiny</div>
+      </div>
+    </aside>
+
+    <!-- CENTER: Wishing Well Stage -->
+    <div class="well-stage" id="well-stage">
+      <div class="well-container" id="well-container">
+
+        <!-- Ambient glow below well -->
+        <div class="well-glow"></div>
+        <div class="well-inner-glow" id="well-inner-glow"></div>
+
+        <!-- Draggable Coin — Ancient 6-7 Gold Coin -->
+        <div id="draggable-coin">
+          <svg viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <radialGradient id="dcFace" cx="38%" cy="33%" r="62%">
+                <stop offset="0%"   stop-color="#fffbe0"/>
+                <stop offset="18%"  stop-color="#FFE040"/>
+                <stop offset="48%"  stop-color="#D4AF37"/>
+                <stop offset="72%"  stop-color="#9a7010"/>
+                <stop offset="100%" stop-color="#5a3a00"/>
+              </radialGradient>
+              <filter id="dcGlow">
+                <feGaussianBlur stdDeviation="1.5" result="b"/>
+                <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+              <path id="dcTextPath" d="M 40,40 m -26,0 a 26,26 0 1,1 52,0 a 26,26 0 1,1 -52,0"/>
+            </defs>
+
+            <!-- Outer rings -->
+            <circle cx="40" cy="40" r="37" fill="#3a2000"/>
+            <circle cx="40" cy="40" r="35" fill="#8b5e00"/>
+            <circle cx="40" cy="40" r="33" fill="#D4AF37"/>
+            <circle cx="40" cy="40" r="31" fill="#7a5000"/>
+            <circle cx="40" cy="40" r="29" fill="url(#dcFace)"/>
+            <circle cx="40" cy="40" r="27.5" fill="none" stroke="rgba(90,58,0,0.45)" stroke-width="0.8"/>
+
+            <!-- Rim dots -->
+            <g fill="#FFE040" opacity="0.85" filter="url(#dcGlow)">
+              <circle cx="40"  cy="5"  r="1.3"/>
+              <circle cx="62"  cy="12" r="1"/>
+              <circle cx="74"  cy="34" r="1.3"/>
+              <circle cx="74"  cy="46" r="1"/>
+              <circle cx="62"  cy="68" r="1"/>
+              <circle cx="40"  cy="75" r="1.3"/>
+              <circle cx="18"  cy="68" r="1"/>
+              <circle cx="6"   cy="46" r="1.3"/>
+              <circle cx="6"   cy="34" r="1"/>
+              <circle cx="18"  cy="12" r="1"/>
+            </g>
+
+            <!-- Circular text: 6-7 WISH -->
+            <text font-family="Cinzel, serif" font-size="6" font-weight="700" fill="#1a0e00" letter-spacing="2">
+              <textPath href="#dcTextPath" startOffset="5%">✦ 6-7 WISH ✦ 6-7 WISH</textPath>
+            </text>
+            <text font-family="Cinzel, serif" font-size="6" font-weight="700" fill="#FFE040" letter-spacing="2" opacity="0.3">
+              <textPath href="#dcTextPath" startOffset="5%">✦ 6-7 WISH ✦ 6-7 WISH</textPath>
+            </text>
+
+            <!-- Big 6 -->
+            <text x="41" y="36" font-family="Cinzel Decorative, serif" font-size="18" font-weight="900"
+                  fill="#1a0e00" text-anchor="middle" filter="url(#dcGlow)">6</text>
+            <!-- Divider dash -->
+            <rect x="29" y="38.5" width="22" height="2.2" rx="1.1" fill="#1a0e00" opacity="0.85"/>
+            <rect x="29" y="38" width="22" height="1.2" rx="0.6" fill="rgba(255,210,0,0.2)"/>
+            <!-- Big 7 -->
+            <text x="41" y="57" font-family="Cinzel Decorative, serif" font-size="18" font-weight="900"
+                  fill="#1a0e00" text-anchor="middle" filter="url(#dcGlow)">7</text>
+
+            <!-- Corner stars -->
+            <text x="24" y="34" font-size="5" fill="#3a2000" text-anchor="middle" opacity="0.7">✦</text>
+            <text x="56" y="34" font-size="5" fill="#3a2000" text-anchor="middle" opacity="0.7">✦</text>
+            <text x="24" y="58" font-size="5" fill="#3a2000" text-anchor="middle" opacity="0.7">✦</text>
+            <text x="56" y="58" font-size="5" fill="#3a2000" text-anchor="middle" opacity="0.7">✦</text>
+
+            <!-- Gleam highlight -->
+            <ellipse cx="28" cy="24" rx="9" ry="5" fill="rgba(255,255,255,0.25)" transform="rotate(-35,28,24)"/>
+            <ellipse cx="25" cy="22" rx="4" ry="2.5" fill="rgba(255,255,255,0.38)" transform="rotate(-35,25,22)"/>
+          </svg>
+        </div>
+
+        <!-- THE WISHING WELL — Cylindrical stone, no roof, matching reference -->
+        <div class="well-svg-wrapper" id="well-svg-wrapper">
+          <svg viewBox="0 0 320 280" xmlns="http://www.w3.org/2000/svg" id="well-svg" style="overflow:visible">
+            <defs>
+              <!-- Radial glow under well -->
+              <radialGradient id="groundGlow" cx="50%" cy="100%" r="55%">
+                <stop offset="0%"   stop-color="#1E4D9A" stop-opacity="0.7"/>
+                <stop offset="60%"  stop-color="#0D1B3D" stop-opacity="0.3"/>
+                <stop offset="100%" stop-color="#060E22" stop-opacity="0"/>
+              </radialGradient>
+              <!-- Water surface glow -->
+              <radialGradient id="waterSurf" cx="50%" cy="45%" r="60%">
+                <stop offset="0%"   stop-color="#7ec8f5" stop-opacity="1"/>
+                <stop offset="35%"  stop-color="#3a90e2" stop-opacity="0.95"/>
+                <stop offset="70%"  stop-color="#1E4D9A" stop-opacity="0.9"/>
+                <stop offset="100%" stop-color="#0a1e5a" stop-opacity="0.8"/>
+              </radialGradient>
+              <!-- Stone face gradient — warm stone lit from top-left -->
+              <linearGradient id="stoneFront" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%"   stop-color="#d4a855"/>
+                <stop offset="30%"  stop-color="#b08530"/>
+                <stop offset="70%"  stop-color="#7a5c18"/>
+                <stop offset="100%" stop-color="#4a3408"/>
+              </linearGradient>
+              <!-- Stone highlight (warm lit top) -->
+              <linearGradient id="stoneTop" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%"   stop-color="#e8c46a"/>
+                <stop offset="100%" stop-color="#9a7020"/>
+              </linearGradient>
+              <!-- Dark side gradient -->
+              <linearGradient id="stoneDark" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%"  stop-color="#2a1c04"/>
+                <stop offset="60%" stop-color="#4a3408"/>
+                <stop offset="100%" stop-color="#6b4e14"/>
+              </linearGradient>
+              <!-- Rim top face -->
+              <radialGradient id="rimTop" cx="45%" cy="40%" r="65%">
+                <stop offset="0%"   stop-color="#e8c86a"/>
+                <stop offset="50%"  stop-color="#c8960a"/>
+                <stop offset="100%" stop-color="#6b4e00"/>
+              </radialGradient>
+              <!-- Stone block colors array-like -->
+              <linearGradient id="sb1" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%"   stop-color="#d4a855"/>
+                <stop offset="100%" stop-color="#9a7020"/>
+              </linearGradient>
+              <linearGradient id="sb2" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%"   stop-color="#b08530"/>
+                <stop offset="100%" stop-color="#7a5c18"/>
+              </linearGradient>
+              <linearGradient id="sb3" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%"   stop-color="#c8960a"/>
+                <stop offset="100%" stop-color="#8a6610"/>
+              </linearGradient>
+              <linearGradient id="sb4" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%"   stop-color="#7a5c18"/>
+                <stop offset="100%" stop-color="#4a3408"/>
+              </linearGradient>
+              <!-- Moss green -->
+              <radialGradient id="mossG" cx="50%" cy="50%" r="50%">
+                <stop offset="0%"  stop-color="#4a8a1a"/>
+                <stop offset="100%" stop-color="#2a5a08"/>
+              </radialGradient>
+              <!-- Inner well dark -->
+              <radialGradient id="innerWell" cx="50%" cy="60%" r="55%">
+                <stop offset="0%"  stop-color="#0a1230"/>
+                <stop offset="100%" stop-color="#020610"/>
+              </radialGradient>
+              <!-- Glow filter -->
+              <filter id="wglow" x="-30%" y="-30%" width="160%" height="160%">
+                <feGaussianBlur stdDeviation="4" result="b"/>
+                <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+              <filter id="softglow" x="-50%" y="-50%" width="200%" height="200%">
+                <feGaussianBlur stdDeviation="8" result="b"/>
+                <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+              <!-- Clip for cylinder body -->
+              <clipPath id="bodyClip">
+                <rect x="60" y="100" width="200" height="160" rx="6"/>
+              </clipPath>
+            </defs>
+
+            <!-- ── GROUND GLOW / SHADOW ── -->
+            <ellipse cx="160" cy="270" rx="130" ry="18" fill="url(#groundGlow)"/>
+            <ellipse cx="160" cy="268" rx="100" ry="10" fill="rgba(0,0,0,0.45)"/>
+
+            <!-- ── RUNE / MAGIC CIRCLE ON GROUND ── -->
+            <g opacity="0.5">
+              <circle cx="160" cy="268" r="118" fill="none" stroke="rgba(212,175,55,0.25)" stroke-width="1.2" stroke-dasharray="7,9"/>
+              <circle cx="160" cy="268" r="100" fill="none" stroke="rgba(212,175,55,0.18)" stroke-width="0.8"/>
+              <circle cx="160" cy="268" r="82"  fill="none" stroke="rgba(30,77,154,0.2)"  stroke-width="0.6"/>
+              <!-- Rune marks -->
+              <g stroke="rgba(212,175,55,0.3)" stroke-width="1" fill="none">
+                <line x1="160" y1="150" x2="160" y2="270"/>
+                <line x1="45"  y1="210" x2="275" y2="210"/>
+                <line x1="77"  y1="167" x2="243" y2="253"/>
+                <line x1="243" y1="167" x2="77"  y2="253"/>
+              </g>
+              <!-- Diamond shapes at corners of rune -->
+              <polygon points="160,152 165,160 160,168 155,160" fill="rgba(212,175,55,0.2)"/>
+              <polygon points="275,210 283,215 275,220 267,215" fill="rgba(212,175,55,0.2)"/>
+              <polygon points="45,210 53,215 45,220 37,215"   fill="rgba(212,175,55,0.2)"/>
+            </g>
+
+            <!-- ── WELL BASE / PLATFORM ── -->
+            <!-- Wide flat base stone -->
+            <ellipse cx="160" cy="262" rx="108" ry="12" fill="#3a2800" opacity="0.9"/>
+            <ellipse cx="160" cy="260" rx="108" ry="12" fill="#5a4010"/>
+            <ellipse cx="160" cy="258" rx="108" ry="10" fill="#7a5818"/>
+            <ellipse cx="160" cy="256" rx="106" ry="9"  fill="#6a5010"/>
+            <!-- Grass/moss fringe on base -->
+            <g fill="#3a7010" opacity="0.6">
+              <ellipse cx="95"  cy="256" rx="10" ry="3.5"/>
+              <ellipse cx="130" cy="260" rx="8"  ry="3"/>
+              <ellipse cx="195" cy="260" rx="9"  ry="3.5"/>
+              <ellipse cx="228" cy="255" rx="8"  ry="3"/>
+            </g>
+            <g fill="#2d5a08" opacity="0.5">
+              <ellipse cx="108" cy="258" rx="6" ry="2.5"/>
+              <ellipse cx="210" cy="258" rx="7" ry="2.5"/>
+            </g>
+
+            <!-- ── WELL CYLINDER BODY ── -->
+            <!-- Overall cylinder outline/shadow -->
+            <rect x="57" y="98" width="206" height="162" rx="8" fill="rgba(0,0,0,0.5)"/>
+
+            <!-- ═══ STONE ROWS — cylindrical barrel ═══ -->
+            <!-- Each row: staggered rectangular stone blocks with mortar gaps,
+                 curved top and bottom to suggest cylinder perspective -->
+
+            <!-- ROW 1 — top, widest visible, slightly elliptical top -->
+            <!-- Row base fill -->
+            <rect x="60" y="100" width="200" height="26" rx="3" fill="#4a3408"/>
+            <!-- Individual stones row 1 (offset pattern) -->
+            <rect x="61"  y="101" width="44" height="24" rx="2" fill="url(#sb1)" stroke="#2a1804" stroke-width="0.7"/>
+            <rect x="107" y="101" width="46" height="24" rx="2" fill="url(#sb2)" stroke="#2a1804" stroke-width="0.7"/>
+            <rect x="155" y="101" width="42" height="24" rx="2" fill="url(#sb3)" stroke="#2a1804" stroke-width="0.7"/>
+            <rect x="199" y="101" width="44" height="24" rx="2" fill="url(#sb1)" stroke="#2a1804" stroke-width="0.7"/>
+            <!-- Stone face highlights -->
+            <rect x="62"  y="102" width="42" height="4" rx="1" fill="rgba(255,220,120,0.25)"/>
+            <rect x="108" y="102" width="44" height="4" rx="1" fill="rgba(255,220,120,0.18)"/>
+            <rect x="156" y="102" width="40" height="4" rx="1" fill="rgba(255,220,120,0.22)"/>
+            <rect x="200" y="102" width="42" height="4" rx="1" fill="rgba(255,220,120,0.2)"/>
+            <!-- Moss on row 1 -->
+            <ellipse cx="75"  cy="125" rx="6"  ry="2" fill="url(#mossG)" opacity="0.55"/>
+            <ellipse cx="230" cy="124" rx="5"  ry="1.8" fill="url(#mossG)" opacity="0.4"/>
+
+            <!-- ROW 2 -->
+            <rect x="60" y="126" width="200" height="26" rx="3" fill="#3a2804"/>
+            <rect x="61"  y="127" width="34" height="24" rx="2" fill="url(#sb2)" stroke="#2a1804" stroke-width="0.7"/>
+            <rect x="97"  y="127" width="48" height="24" rx="2" fill="url(#sb1)" stroke="#2a1804" stroke-width="0.7"/>
+            <rect x="147" y="127" width="44" height="24" rx="2" fill="url(#sb3)" stroke="#2a1804" stroke-width="0.7"/>
+            <rect x="193" y="127" width="36" height="24" rx="2" fill="url(#sb2)" stroke="#2a1804" stroke-width="0.7"/>
+            <rect x="231" y="127" width="29" height="24" rx="2" fill="url(#sb4)" stroke="#1a0804" stroke-width="0.7"/>
+            <!-- Highlights -->
+            <rect x="62"  y="128" width="32" height="4" rx="1" fill="rgba(255,220,120,0.2)"/>
+            <rect x="98"  y="128" width="46" height="4" rx="1" fill="rgba(255,220,120,0.22)"/>
+            <rect x="148" y="128" width="42" height="4" rx="1" fill="rgba(255,220,120,0.18)"/>
+            <!-- Moss -->
+            <ellipse cx="120" cy="150" rx="7"  ry="2.5" fill="url(#mossG)" opacity="0.5"/>
+            <ellipse cx="210" cy="149" rx="5"  ry="2"   fill="url(#mossG)" opacity="0.38"/>
+
+            <!-- ROW 3 -->
+            <rect x="61" y="152" width="198" height="26" rx="3" fill="#4a3408"/>
+            <rect x="62"  y="153" width="50" height="24" rx="2" fill="url(#sb3)" stroke="#2a1804" stroke-width="0.7"/>
+            <rect x="114" y="153" width="40" height="24" rx="2" fill="url(#sb1)" stroke="#2a1804" stroke-width="0.7"/>
+            <rect x="156" y="153" width="46" height="24" rx="2" fill="url(#sb2)" stroke="#2a1804" stroke-width="0.7"/>
+            <rect x="204" y="153" width="38" height="24" rx="2" fill="url(#sb3)" stroke="#2a1804" stroke-width="0.7"/>
+            <!-- Highlights -->
+            <rect x="63"  y="154" width="48" height="4" rx="1" fill="rgba(255,220,120,0.23)"/>
+            <rect x="115" y="154" width="38" height="4" rx="1" fill="rgba(255,220,120,0.2)"/>
+            <rect x="157" y="154" width="44" height="4" rx="1" fill="rgba(255,220,120,0.18)"/>
+            <!-- Moss -->
+            <ellipse cx="88"  cy="175" rx="8"  ry="2.8" fill="url(#mossG)" opacity="0.55"/>
+            <ellipse cx="245" cy="174" rx="6"  ry="2"   fill="url(#mossG)" opacity="0.42"/>
+
+            <!-- ROW 4 -->
+            <rect x="62" y="178" width="196" height="26" rx="3" fill="#3a2804"/>
+            <rect x="63"  y="179" width="38" height="24" rx="2" fill="url(#sb1)" stroke="#2a1804" stroke-width="0.7"/>
+            <rect x="103" y="179" width="44" height="24" rx="2" fill="url(#sb2)" stroke="#2a1804" stroke-width="0.7"/>
+            <rect x="149" y="179" width="50" height="24" rx="2" fill="url(#sb1)" stroke="#2a1804" stroke-width="0.7"/>
+            <rect x="201" y="179" width="40" height="24" rx="2" fill="url(#sb3)" stroke="#2a1804" stroke-width="0.7"/>
+            <rect x="243" y="179" width="15" height="24" rx="2" fill="url(#sb4)" stroke="#1a0804" stroke-width="0.7"/>
+            <!-- Highlights -->
+            <rect x="64"  y="180" width="36" height="4" rx="1" fill="rgba(255,220,120,0.22)"/>
+            <rect x="104" y="180" width="42" height="4" rx="1" fill="rgba(255,220,120,0.2)"/>
+            <rect x="150" y="180" width="48" height="4" rx="1" fill="rgba(255,220,120,0.18)"/>
+            <!-- Moss -->
+            <ellipse cx="160" cy="201" rx="9"  ry="3"   fill="url(#mossG)" opacity="0.48"/>
+            <ellipse cx="68"  cy="200" rx="6"  ry="2"   fill="url(#mossG)" opacity="0.4"/>
+
+            <!-- ROW 5 — narrowing toward base -->
+            <rect x="65" y="204" width="190" height="24" rx="3" fill="#4a3408"/>
+            <rect x="66"  y="205" width="44" height="22" rx="2" fill="url(#sb2)" stroke="#2a1804" stroke-width="0.7"/>
+            <rect x="112" y="205" width="46" height="22" rx="2" fill="url(#sb3)" stroke="#2a1804" stroke-width="0.7"/>
+            <rect x="160" y="205" width="42" height="22" rx="2" fill="url(#sb1)" stroke="#2a1804" stroke-width="0.7"/>
+            <rect x="204" y="205" width="36" height="22" rx="2" fill="url(#sb2)" stroke="#2a1804" stroke-width="0.7"/>
+            <rect x="242" y="205" width="13" height="22" rx="2" fill="url(#sb4)" stroke="#1a0804" stroke-width="0.7"/>
+            <!-- Highlights -->
+            <rect x="67"  y="206" width="42" height="3.5" rx="1" fill="rgba(255,220,120,0.2)"/>
+            <rect x="113" y="206" width="44" height="3.5" rx="1" fill="rgba(255,220,120,0.18)"/>
+            <rect x="161" y="206" width="40" height="3.5" rx="1" fill="rgba(255,220,120,0.22)"/>
+            <!-- Moss -->
+            <ellipse cx="225" cy="225" rx="8"  ry="2.5" fill="url(#mossG)" opacity="0.5"/>
+            <ellipse cx="90"  cy="225" rx="7"  ry="2.5" fill="url(#mossG)" opacity="0.45"/>
+
+            <!-- ROW 6 — bottom, narrowest -->
+            <rect x="70" y="228" width="180" height="20" rx="3" fill="#3a2804"/>
+            <rect x="71"  y="229" width="36" height="18" rx="2" fill="url(#sb3)" stroke="#1a0804" stroke-width="0.7"/>
+            <rect x="109" y="229" width="42" height="18" rx="2" fill="url(#sb1)" stroke="#1a0804" stroke-width="0.7"/>
+            <rect x="153" y="229" width="38" height="18" rx="2" fill="url(#sb2)" stroke="#1a0804" stroke-width="0.7"/>
+            <rect x="193" y="229" width="40" height="18" rx="2" fill="url(#sb3)" stroke="#1a0804" stroke-width="0.7"/>
+            <rect x="235" y="229" width="15" height="18" rx="2" fill="url(#sb4)" stroke="#1a0804" stroke-width="0.7"/>
+
+            <!-- ── CYLINDER SIDE SHADING (left dark, right mid) ── -->
+            <!-- Left shadow band -->
+            <rect x="60" y="100" width="22" height="162" rx="3"
+                  fill="url(#stoneDark)" opacity="0.65" clip-path="url(#bodyClip)"/>
+            <!-- Right shadow band -->
+            <rect x="238" y="100" width="22" height="162" rx="3"
+                  fill="rgba(0,0,0,0.35)" opacity="0.7" clip-path="url(#bodyClip)"/>
+            <!-- Center subtle highlight band -->
+            <rect x="130" y="100" width="60" height="162"
+                  fill="rgba(255,220,120,0.06)" clip-path="url(#bodyClip)"/>
+
+            <!-- ── WELL TOP RIM (ellipse — looking down into the cylinder) ── -->
+            <!-- Outer rim shadow -->
+            <ellipse cx="160" cy="104" rx="104" ry="22" fill="rgba(0,0,0,0.6)"/>
+            <!-- Outer rim stone ring -->
+            <ellipse cx="160" cy="102" rx="104" ry="22" fill="#6a4e10"/>
+            <!-- Rim bevel top -->
+            <ellipse cx="160" cy="100" rx="104" ry="22" fill="url(#rimTop)"/>
+            <!-- Rim inner ring -->
+            <ellipse cx="160" cy="100" rx="96"  ry="18" fill="#4a3408"/>
+            <!-- Inner rim ring 2 -->
+            <ellipse cx="160" cy="100" rx="90"  ry="16" fill="#2a1c08"/>
+
+            <!-- ── WELL INTERIOR / WATER ── -->
+            <!-- Dark interior -->
+            <ellipse cx="160" cy="100" rx="88" ry="15" fill="url(#innerWell)"/>
+            <!-- Water surface glow -->
+            <ellipse cx="160" cy="100" rx="82" ry="13" fill="url(#waterSurf)" id="water-surface"/>
+            <!-- Water shimmer streaks -->
+            <ellipse cx="145" cy="97"  rx="22" ry="4"  fill="rgba(180,230,255,0.45)" opacity="0.8"/>
+            <ellipse cx="175" cy="103" rx="16" ry="3"  fill="rgba(120,200,255,0.35)" opacity="0.65"/>
+            <ellipse cx="155" cy="103" rx="10" ry="2"  fill="rgba(255,255,255,0.25)" opacity="0.6"/>
+            <!-- Animated water glow -->
+            <ellipse cx="160" cy="100" rx="82" ry="13" fill="rgba(30,77,154,0.25)" id="water-glow-anim"/>
+
+            <!-- ── TOP RIM GOLD TRIM LINE ── -->
+            <ellipse cx="160" cy="100" rx="104" ry="22" fill="none"
+                     stroke="rgba(212,175,55,0.7)" stroke-width="1.5"/>
+            <ellipse cx="160" cy="98"  rx="102" ry="21" fill="none"
+                     stroke="rgba(255,240,100,0.35)" stroke-width="0.8"/>
+
+            <!-- ── GOLDEN SPARKLES AROUND WELL TOP ── -->
+            <g id="sparkle-group">
+              <circle cx="68"  cy="88"  r="2.5" fill="#FFD700" opacity="0.9" filter="url(#wglow)"/>
+              <circle cx="252" cy="82"  r="2"   fill="#FFD700" opacity="0.75" filter="url(#wglow)"/>
+              <circle cx="110" cy="72"  r="1.5" fill="#FFD700" opacity="0.6"/>
+              <circle cx="215" cy="76"  r="2"   fill="#FFD700" opacity="0.8" filter="url(#wglow)"/>
+              <circle cx="160" cy="68"  r="1.5" fill="#FFE040" opacity="0.5"/>
+              <circle cx="80"  cy="118" r="1.8" fill="#FFD700" opacity="0.55"/>
+              <circle cx="240" cy="115" r="1.5" fill="#FFD700" opacity="0.5"/>
+            </g>
+
+            <!-- ── MAGIC LIGHT EMANATING FROM INSIDE ── -->
+            <ellipse cx="160" cy="100" rx="70" ry="11" fill="rgba(30,77,154,0.4)"
+                     filter="url(#softglow)" opacity="0.8" id="well-inner-light"/>
+
+            <!-- ── FLOATING DUST MOTES ── -->
+            <g opacity="0.6">
+              <circle cx="140" cy="82" r="1"   fill="#FFE040"/>
+              <circle cx="180" cy="78" r="0.8" fill="#FFE040"/>
+              <circle cx="155" cy="70" r="1.2" fill="#FFE040"/>
+              <circle cx="172" cy="88" r="0.7" fill="#FFE040"/>
+            </g>
+          </svg>
+        </div>
+
+      </div><!-- end well-container -->
+
+      <p class="drag-hint" id="drag-hint">✦ Drag the coin to the well ✦</p>
+    </div>
+
+    <!-- RIGHT: Wish Form -->
+    <div class="wish-form-panel">
+      <p class="form-title">✦ Write Your Wish ✦</p>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="first-name">First Name</label>
+          <input type="text" id="first-name" placeholder="Your name..." maxlength="50" autocomplete="given-name">
+        </div>
+        <div class="form-group">
+          <label for="last-name">Last Name</label>
+          <input type="text" id="last-name" placeholder="Last name..." maxlength="50" autocomplete="family-name">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="wish-text">Your Wish</label>
+        <textarea id="wish-text" placeholder="Write your wish here... Let the well hear your heart's deepest desire..." maxlength="300"></textarea>
+        <div class="char-counter" id="char-counter">0 / 300</div>
+      </div>
+
+      <button class="btn-cast" id="btn-cast" onclick="handleCastWish()">
+        <span class="btn-icon">✦</span> Cast Your Wish
+      </button>
+
+      <p style="text-align:center;font-size:0.75rem;color:rgba(255,255,255,0.3);margin-top:1rem;font-family:'Cinzel',serif;letter-spacing:1px;">
+        FOR ENTERTAINMENT PURPOSES ONLY
+      </p>
+    </div>
+
+  </main>
+
+  <!-- ABOUT SECTION -->
+  <section class="about-section">
+    <div class="gold-divider"><span class="gold-divider-icon">✦</span></div>
+    <h2>The Magic of the Well</h2>
+    <p>The 6-7 Wishing Well has been a place of wonder for dreamers, hopeful hearts, and those who believe in the power of intention. Every coin dropped carries a story — a hope for love, health, prosperity, or peace.</p>
+    <p>Cast your wish into the waters of possibility. The well listens.</p>
+    <span class="entertainment-badge">✦ Digital Entertainment Experience ✦</span>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-logo">6·7 Wish</div>
+    <nav class="footer-links">
+      <a href="/privacy-policy.html">Privacy Policy</a>
+      <a href="/terms-of-service.html">Terms of Service</a>
+      <a href="/refund-policy.html">Refund Policy</a>
+      <a href="mailto:support@sixsevenwish.com">Contact</a>
+    </nav>
+    <div class="footer-info">
+      <p>© 2026 Milkox Group LLC. All rights reserved.</p>
+      <p>Official Website: <a href="https://www.sixsevenwish.com">www.sixsevenwish.com</a></p>
+      <p>Support: <a href="mailto:support@sixsevenwish.com">support@sixsevenwish.com</a></p>
+      <p>This website is owned and operated by Milkox Group LLC.<br>1 North Miami Beach, FL 94043, United States.</p>
+    </div>
+    <div class="footer-disclaimer">
+      <p>This site provides digital entertainment services only. No specific results are guaranteed and this service does not constitute professional advice of any kind. This website is not part of Facebook, Instagram, or Meta Platforms, Inc. and is not endorsed by Meta in any way.</p>
+    </div>
+  </footer>
+
+</div><!-- end site-wrapper -->
+
+<!-- MODAL -->
+<div id="modal-overlay">
+  <div class="modal-box">
+    <span class="modal-icon">🪙</span>
+    <h2 class="modal-title">Your Wish Is Ready To Be Submitted</h2>
+    <p class="modal-text">The Well has accepted your wish.<br>Complete your contribution to officially place it into the Digital Wishing Well.</p>
+
+    <!-- Selected level + amount display -->
+    <div style="
+      background:rgba(212,175,55,0.08);
+      border:1px solid rgba(212,175,55,0.4);
+      border-radius:10px;
+      padding:0.9rem 1.2rem;
+      margin-bottom:1.4rem;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:0.7rem;
+    ">
+      <span style="font-size:1.3rem;">✦</span>
+      <span id="modal-amount-display" style="
+        font-family:'Cinzel',serif;
+        font-size:1rem;
+        font-weight:700;
+        letter-spacing:2px;
+        color:#FFD700;
+        text-transform:uppercase;
+      ">Hope Wish — $3.00</span>
+      <span style="font-size:1.3rem;">✦</span>
+    </div>
+
+    <div id="paypal-button-container"></div>
+
+    <p class="modal-disclaimer" style="margin-top:1rem;">
+      By completing your contribution, you agree to our
+      <a href="/terms-of-service.html" target="_blank" style="color:#D4AF37;">Terms of Service</a>.
+      This is a digital entertainment experience only. No specific outcomes are guaranteed. All sales final.
+    </p>
+  </div>
+</div>
+
+<script>
+// ═══════════════════════════════════════
+// STARFIELD
+// ═══════════════════════════════════════
+const canvas = document.getElementById('starfield');
+const ctx = canvas.getContext('2d');
+let stars = [];
+
+function initStars() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  stars = [];
+  for (let i = 0; i < 200; i++) {
+    stars.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      r: Math.random() * 1.5,
+      alpha: Math.random(),
+      speed: Math.random() * 0.3 + 0.1,
+      twinkle: Math.random() * Math.PI * 2
+    });
+  }
+}
+
+function drawStars() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  const t = Date.now() / 1000;
+  stars.forEach(s => {
+    s.twinkle += 0.02;
+    const alpha = (Math.sin(s.twinkle) * 0.4 + 0.6) * s.alpha;
+    ctx.beginPath();
+    ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(212,175,55,${alpha})`;
+    ctx.fill();
+  });
+  requestAnimationFrame(drawStars);
+}
+
+window.addEventListener('resize', initStars);
+initStars();
+drawStars();
+
+// ═══════════════════════════════════════
+// AMBIENT PARTICLES
+// ═══════════════════════════════════════
+function spawnAmbientParticle() {
+  const p = document.createElement('div');
+  p.className = 'ambient-particle';
+  const size = Math.random() * 4 + 2;
+  p.style.cssText = `
+    width:${size}px;height:${size}px;
+    left:${Math.random()*100}%;
+    background:radial-gradient(circle,rgba(255,215,0,${Math.random()*0.6+0.3}),transparent);
+    animation-duration:${Math.random()*10+8}s;
+    animation-delay:${Math.random()*5}s;
+    filter:blur(${size>4?1:0}px);
+  `;
+  document.body.appendChild(p);
+  setTimeout(() => p.remove(), 15000);
+}
+
+setInterval(spawnAmbientParticle, 800);
+
+// ═══════════════════════════════════════
+// WISH LEVEL SELECTION
+// ═══════════════════════════════════════
+let selectedLevel = { level: 'hope', amount: 3 };
+
+function selectLevel(card) {
+  document.querySelectorAll('.level-card').forEach(c => c.classList.remove('selected'));
+  card.classList.add('selected');
+  selectedLevel = {
+    level: card.dataset.level,
+    amount: parseFloat(card.dataset.amount)
+  };
+  gsap.fromTo(card, { scale: 0.97 }, { scale: 1, duration: 0.3, ease: 'back.out(2)' });
+}
+
+// ═══════════════════════════════════════
+// CHARACTER COUNTER
+// ═══════════════════════════════════════
+const wishText = document.getElementById('wish-text');
+const charCounter = document.getElementById('char-counter');
+
+wishText.addEventListener('input', () => {
+  const len = wishText.value.length;
+  charCounter.textContent = `${len} / 300`;
+  charCounter.className = 'char-counter' + (len > 280 ? ' danger' : len > 240 ? ' warning' : '');
+});
+
+// ═══════════════════════════════════════
+// COIN DRAG PHYSICS
+// ═══════════════════════════════════════
+const coin = document.getElementById('draggable-coin');
+const wellContainer = document.getElementById('well-container');
+const wellSvgWrapper = document.getElementById('well-svg-wrapper');
+const dragHint = document.getElementById('drag-hint');
+
+let isDragging = false;
+let coinX = 0, coinY = 0;
+let startX, startY, originX, originY;
+let trailInterval;
+let coinDropped = false;
+
+function getCoinCenter() {
+  const rect = coin.getBoundingClientRect();
+  return { x: rect.left + rect.width/2, y: rect.top + rect.height/2 };
+}
+
+function getWellCenter() {
+  const rect = wellSvgWrapper.getBoundingClientRect();
+  return { x: rect.left + rect.width/2, y: rect.top + rect.height * 0.45 };
+}
+
+function getDistance(a, b) {
+  return Math.sqrt((a.x-b.x)**2 + (a.y-b.y)**2);
+}
+
+coin.addEventListener('pointerdown', (e) => {
+  if (coinDropped) return;
+  e.preventDefault();
+  coin.setPointerCapture(e.pointerId);
+  isDragging = true;
+  coin.classList.add('dragging');
+
+  const rect = coin.getBoundingClientRect();
+  startX = e.clientX - rect.left - rect.width/2;
+  startY = e.clientY - rect.top - rect.height/2;
+
+  const containerRect = wellContainer.getBoundingClientRect();
+  originX = rect.left - containerRect.left + rect.width/2;
+  originY = rect.top - containerRect.top + rect.height/2;
+
+  coinX = originX;
+  coinY = originY;
+
+  dragHint.style.opacity = '0';
+  coin.style.animation = 'none';
+
+  // Spawn trail
+  trailInterval = setInterval(spawnTrail, 50);
+});
+
+document.addEventListener('pointermove', (e) => {
+  if (!isDragging || coinDropped) return;
+
+  const containerRect = wellContainer.getBoundingClientRect();
+  coinX = e.clientX - containerRect.left - startX;
+  coinY = e.clientY - containerRect.top - startY;
+
+  coin.style.left = coinX + 'px';
+  coin.style.top = coinY + 'px';
+  coin.style.transform = 'none';
+
+  // Rotation based on velocity
+  const angle = (e.movementX || 0) * 2;
+  coin.style.transform = `rotate(${angle}deg)`;
+
+  // Check proximity to well
+  const dist = getDistance(getCoinCenter(), getWellCenter());
+  if (dist < 80) {
+    coin.style.boxShadow = '0 0 40px rgba(255,215,0,1), 0 0 80px rgba(212,175,55,0.8)';
+    document.getElementById('water-surface').setAttribute('fill', 'url(#waterGlow)');
+    gsap.to('#water-surface', { attr: { rx: 78 }, duration: 0.3 });
+  } else {
+    coin.style.boxShadow = '';
+  }
+});
+
+document.addEventListener('pointerup', (e) => {
+  if (!isDragging || coinDropped) return;
+  isDragging = false;
+  clearInterval(trailInterval);
+  coin.classList.remove('dragging');
+
+  const dist = getDistance(getCoinCenter(), getWellCenter());
+
+  if (dist < 90) {
+    // DROP INTO WELL
+    dropCoinIntoWell();
+  } else {
+    // Return to home position
+    const containerRect = wellContainer.getBoundingClientRect();
+    const homeX = containerRect.width / 2;
+    gsap.to(coin, {
+      left: homeX, top: 30,
+      duration: 0.6,
+      ease: 'elastic.out(1, 0.5)',
+      onComplete: () => {
+        coin.style.transform = '';
+        coin.style.animation = 'coinFloat 2.5s ease-in-out infinite';
+        dragHint.style.opacity = '1';
+      }
+    });
+  }
+});
+
+function spawnTrail() {
+  if (!isDragging) return;
+  const containerRect = wellContainer.getBoundingClientRect();
+  const t = document.createElement('div');
+  t.className = 'coin-trail';
+  const size = Math.random() * 20 + 10;
+  t.style.cssText = `
+    width:${size}px;height:${size}px;
+    left:${coinX - size/2 + wellContainer.offsetLeft}px;
+    top:${coinY - size/2 + wellContainer.offsetTop}px;
+    position:absolute;
+    z-index:8;
+  `;
+  wellContainer.appendChild(t);
+  setTimeout(() => t.remove(), 500);
+}
+
+// ═══════════════════════════════════════
+// COIN DROP ANIMATION
+// ═══════════════════════════════════════
+function dropCoinIntoWell() {
+  coinDropped = true;
+  const wellCenter = getWellCenter();
+  const containerRect = wellContainer.getBoundingClientRect();
+  const targetX = wellCenter.x - containerRect.left;
+  const targetY = wellCenter.y - containerRect.top;
+
+  // Animate coin into well
+  gsap.to(coin, {
+    left: targetX,
+    top: targetY,
+    width: 20,
+    height: 20,
+    duration: 0.7,
+    ease: 'power2.in',
+    onUpdate: () => {
+      coin.style.transform = `rotate(${Date.now() / 5}deg)`;
+    },
+    onComplete: () => {
+      coin.style.display = 'none';
+      triggerMagicalSequence();
+    }
+  });
+
+  // Glowing trail during drop
+  gsap.to(coin, {
+    boxShadow: '0 0 60px rgba(255,215,0,1), 0 0 120px rgba(212,175,55,0.9)',
+    duration: 0.3
+  });
+}
+
+// ═══════════════════════════════════════
+// MAGICAL SEQUENCE
+// ═══════════════════════════════════════
+function triggerMagicalSequence() {
+  playCoinSound();
+
+  // 1. Golden flash
+  gsap.timeline()
+    .to('#flash-overlay', { opacity: 1, duration: 0.15, ease: 'power2.out' })
+    .to('#flash-overlay', { opacity: 0, duration: 0.8, ease: 'power2.in' });
+
+  // 2. Energy waves
+  setTimeout(() => {
+    for (let i = 0; i < 4; i++) {
+      setTimeout(() => createRipple(), i * 200);
+    }
+  }, 100);
+
+  // 3. Particles burst
+  setTimeout(() => burstParticles(), 200);
+
+  // 4. Well inner illumination
+  setTimeout(() => {
+    const innerGlow = document.getElementById('well-inner-glow');
+    gsap.to(innerGlow, { opacity: 1, duration: 0.5 });
+    gsap.to('#water-surface', { attr: { fill: 'rgba(120,220,255,0.95)' }, duration: 0.5 });
+    gsap.to('#well-inner-light', { opacity: 1, duration: 0.4 });
+    setTimeout(() => {
+      gsap.to(innerGlow, { opacity: 0, duration: 1.5 });
+      gsap.to('#water-surface', { attr: { fill: 'url(#waterSurf)' }, duration: 1.5 });
+      gsap.to('#well-inner-light', { opacity: 0.8, duration: 1.5 });
+    }, 1000);
+  }, 300);
+
+  // 5. Logo pulse
+  setTimeout(() => {
+    gsap.timeline()
+      .to('#logo-coin', { scale: 1.3, duration: 0.3, ease: 'power2.out' })
+      .to('#logo-coin', { scale: 1, duration: 0.5, ease: 'elastic.out(1, 0.4)' });
+  }, 500);
+
+  // 6. Show modal
+  setTimeout(() => {
+    showModal();
+  }, 2500);
+}
+
+function createRipple() {
+  const r = document.createElement('div');
+  r.className = 'ripple';
+  const wellCenter = getWellCenter();
+  r.style.cssText = `
+    position:fixed;
+    left:${wellCenter.x}px;
+    top:${wellCenter.y}px;
+    transform:translate(-50%,-50%);
+  `;
+  document.body.appendChild(r);
+  setTimeout(() => r.remove(), 1500);
+}
+
+function burstParticles() {
+  const wellCenter = getWellCenter();
+  for (let i = 0; i < 30; i++) {
+    const p = document.createElement('div');
+    const angle = (Math.PI * 2 / 30) * i;
+    const dist = Math.random() * 120 + 40;
+    const size = Math.random() * 6 + 2;
+    p.style.cssText = `
+      position:fixed;
+      width:${size}px;height:${size}px;
+      border-radius:50%;
+      background:${Math.random() > 0.5 ? '#FFD700' : '#4a90e2'};
+      left:${wellCenter.x}px;
+      top:${wellCenter.y}px;
+      pointer-events:none;
+      z-index:103;
+      box-shadow:0 0 ${size*2}px currentColor;
+    `;
+    document.body.appendChild(p);
+    gsap.to(p, {
+      x: Math.cos(angle) * dist,
+      y: Math.sin(angle) * dist - 50,
+      opacity: 0,
+      duration: 1.2 + Math.random() * 0.8,
+      ease: 'power2.out',
+      onComplete: () => p.remove()
+    });
+  }
+}
+
+function playCoinSound() {
+  try {
+    const ctx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.frequency.setValueAtTime(800, ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(400, ctx.currentTime + 0.3);
+    gain.gain.setValueAtTime(0.3, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.5);
+    osc.start(ctx.currentTime);
+    osc.stop(ctx.currentTime + 0.5);
+
+    // Magical chime
+    setTimeout(() => {
+      const osc2 = ctx.createOscillator();
+      const gain2 = ctx.createGain();
+      osc2.connect(gain2);
+      gain2.connect(ctx.destination);
+      osc2.type = 'sine';
+      osc2.frequency.setValueAtTime(1200, ctx.currentTime);
+      osc2.frequency.exponentialRampToValueAtTime(800, ctx.currentTime + 1);
+      gain2.gain.setValueAtTime(0.2, ctx.currentTime);
+      gain2.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 1.5);
+      osc2.start(ctx.currentTime);
+      osc2.stop(ctx.currentTime + 1.5);
+    }, 200);
+  } catch(e) {}
+}
+
+// ═══════════════════════════════════════
+// FORM VALIDATION & CAST
+// ═══════════════════════════════════════
+function handleCastWish() {
+  const fn = document.getElementById('first-name');
+  const ln = document.getElementById('last-name');
+  const wt = document.getElementById('wish-text');
+  let valid = true;
+
+  [fn, ln, wt].forEach(el => el.classList.remove('invalid'));
+
+  if (!fn.value.trim()) { fn.classList.add('invalid'); valid = false; }
+  if (!ln.value.trim()) { ln.classList.add('invalid'); valid = false; }
+  if (!wt.value.trim()) { wt.classList.add('invalid'); valid = false; }
+
+  if (!valid) {
+    gsap.fromTo('.wish-form-panel', { x: -5 }, { x: 0, duration: 0.4, ease: 'elastic.out(4, 0.5)', clearProps: 'x' });
+    return;
+  }
+
+  if (coinDropped) {
+    showModal();
+  } else {
+    // Prompt to drop coin
+    gsap.timeline()
+      .to('#draggable-coin', { scale: 1.3, duration: 0.2 })
+      .to('#draggable-coin', { scale: 1, duration: 0.3, ease: 'elastic.out(1, 0.5)' });
+    gsap.to('#drag-hint', { opacity: 1, scale: 1.2, duration: 0.3 });
+    setTimeout(() => gsap.to('#drag-hint', { scale: 1, duration: 0.3 }), 300);
+    // Also allow direct submit without coin drag
+    showModal();
+  }
+}
+
+// ═══════════════════════════════════════
+// MODAL
+// ═══════════════════════════════════════
+function showModal() {
+  const overlay = document.getElementById('modal-overlay');
+  overlay.classList.add('show');
+
+  // Always refresh the amount label (user may have changed level)
+  const names = { hope: 'Hope Wish', dream: 'Dream Wish', destiny: 'Destiny Wish' };
+  const display = document.getElementById('modal-amount-display');
+  if (display) {
+    display.textContent = `${names[selectedLevel.level]} — $${selectedLevel.amount.toFixed(2)}`;
+  }
+
+  // Re-render PayPal buttons if level changed after first render
+  if (paypalRendered) {
+    paypalRendered = false;
+    document.getElementById('paypal-button-container').innerHTML = '';
+  }
+  initPayPal();
+}
+
+// ═══════════════════════════════════════
+// PAYPAL CONFIGURATION
+// ═══════════════════════════════════════
+const PAYPAL_CONFIG = {
+  clientId:     'ENfnaFThD2nf0YoiyfzhhiavBXa7UPHhcqgqqEs5e3-SNWFM0MMisIanP2-Z9vD1HErX7GL_wl_JRzUZ',
+  businessEmail:'isradelx@gmail.com',
+  returnUrl:    'https://www.sixsevenwish.com/gracias.html',
+  cancelUrl:    'https://www.sixsevenwish.com/payment-cancelled.html',
+  currency:     'USD'
+};
+
+let paypalRendered = false;
+
+function initPayPal() {
+  if (paypalRendered) return;
+  paypalRendered = true;
+
+  const container = document.getElementById('paypal-button-container');
+
+  if (typeof paypal === 'undefined') {
+    container.innerHTML = `
+      <div style="text-align:center;padding:1.5rem;color:rgba(212,175,55,0.9);font-family:'Cinzel',serif;font-size:0.85rem;letter-spacing:2px;border:1px solid rgba(212,175,55,0.3);border-radius:10px;">
+        ✦ CONNECTING TO PAYPAL… ✦<br>
+        <span style="font-size:0.72rem;color:rgba(255,255,255,0.5);font-family:'Crimson Text',serif;letter-spacing:normal;">Please wait or refresh the page.</span>
+      </div>`;
+    return;
+  }
+
+  // Show selected amount in modal
+  const amountDisplay = document.getElementById('modal-amount-display');
+  if (amountDisplay) {
+    const names = { hope: 'Hope Wish', dream: 'Dream Wish', destiny: 'Destiny Wish' };
+    amountDisplay.textContent = `${names[selectedLevel.level]} — $${selectedLevel.amount.toFixed(2)}`;
+  }
+
+  paypal.Buttons({
+    style: {
+      shape:  'rect',
+      color:  'gold',
+      layout: 'vertical',
+      label:  'pay',
+      height: 48
+    },
+
+    // ── CREATE ORDER ──
+    createOrder: function(data, actions) {
+      const levelNames = { hope: 'Hope Wish', dream: 'Dream Wish', destiny: 'Destiny Wish' };
+      return actions.order.create({
+        intent: 'CAPTURE',
+        purchase_units: [{
+          payee: {
+            email_address: PAYPAL_CONFIG.businessEmail
+          },
+          amount: {
+            value:         selectedLevel.amount.toFixed(2),
+            currency_code: PAYPAL_CONFIG.currency
+          },
+          description: `6-7 Wish — ${levelNames[selectedLevel.level]} ($${selectedLevel.amount.toFixed(2)})`,
+          custom_id:   selectedLevel.level
+        }],
+        application_context: {
+          brand_name:          '6-7 Wish by Milkox Group LLC',
+          landing_page:        'BILLING',
+          user_action:         'PAY_NOW',
+          return_url:          PAYPAL_CONFIG.returnUrl,
+          cancel_url:          PAYPAL_CONFIG.cancelUrl,
+          shipping_preference: 'NO_SHIPPING'
+        }
+      });
+    },
+
+    // ── ON APPROVE (payment captured) ──
+    onApprove: function(data, actions) {
+      // Show processing overlay
+      showProcessing(true);
+
+      return actions.order.capture().then(function(details) {
+        const txnId  = details.id;
+        const status = details.status; // "COMPLETED"
+        const payer  = details.payer || {};
+
+        // Save to database THEN redirect
+        saveWishToDb(txnId, status, payer).finally(() => {
+          // Build redirect URL with query params for gracias.html to read
+          const params = new URLSearchParams({
+            txn:    txnId,
+            level:  selectedLevel.level,
+            amount: selectedLevel.amount.toFixed(2),
+            status: status
+          });
+          window.location.href = PAYPAL_CONFIG.returnUrl + '?' + params.toString();
+        });
+
+      }).catch(function(err) {
+        showProcessing(false);
+        console.error('PayPal capture error:', err);
+        showPayPalError('Payment capture failed. Please try again or contact support.');
+      });
+    },
+
+    // ── ON CANCEL ──
+    onCancel: function(data) {
+      window.location.href = PAYPAL_CONFIG.cancelUrl + '?reason=cancelled';
+    },
+
+    // ── ON ERROR ──
+    onError: function(err) {
+      showProcessing(false);
+      console.error('PayPal error:', err);
+      showPayPalError('Something went wrong with PayPal. Please refresh and try again.');
+    }
+
+  }).render('#paypal-button-container');
+}
+
+// ── SAVE WISH TO DB (async, non-blocking redirect) ──
+function saveWishToDb(txnId, status, payer) {
+  const formData = new FormData();
+  formData.append('first_name',            document.getElementById('first-name').value.trim());
+  formData.append('last_name',             document.getElementById('last-name').value.trim());
+  formData.append('wish_text',             document.getElementById('wish-text').value.trim());
+  formData.append('wish_level',            selectedLevel.level);
+  formData.append('amount',               selectedLevel.amount.toFixed(2));
+  formData.append('paypal_transaction_id', txnId);
+  formData.append('status',               status);
+  formData.append('payer_email',          payer.email_address || '');
+
+  return fetch('/api/save-wish.php', {
+    method: 'POST',
+    body:   formData
+  }).catch(e => console.warn('DB save error (non-fatal):', e));
+}
+
+// ── PROCESSING OVERLAY ──
+function showProcessing(show) {
+  let overlay = document.getElementById('processing-overlay');
+  if (!overlay && show) {
+    overlay = document.createElement('div');
+    overlay.id = 'processing-overlay';
+    overlay.style.cssText = `
+      position:fixed;inset:0;background:rgba(6,14,34,0.92);z-index:300;
+      display:flex;flex-direction:column;align-items:center;justify-content:center;
+      backdrop-filter:blur(6px);
+    `;
+    overlay.innerHTML = `
+      <div style="font-size:3rem;animation:coinFloat 1s ease-in-out infinite;">🪙</div>
+      <p style="font-family:'Cinzel',serif;font-size:1rem;letter-spacing:3px;color:#FFD700;margin-top:1rem;text-transform:uppercase;">
+        Processing Your Wish…
+      </p>
+      <p style="font-family:'Crimson Text',serif;font-size:0.9rem;color:rgba(255,255,255,0.5);margin-top:0.5rem;">
+        Please do not close this window
+      </p>
+    `;
+    document.body.appendChild(overlay);
+  } else if (overlay && !show) {
+    overlay.remove();
+  }
+}
+
+// ── PAYPAL ERROR MESSAGE ──
+function showPayPalError(msg) {
+  const container = document.getElementById('paypal-button-container');
+  const errDiv = document.createElement('div');
+  errDiv.style.cssText = 'color:#ff4757;font-family:"Crimson Text",serif;font-size:0.95rem;text-align:center;padding:0.8rem;margin-top:0.5rem;border:1px solid rgba(255,71,87,0.3);border-radius:8px;background:rgba(255,71,87,0.05);';
+  errDiv.textContent = msg;
+  container.appendChild(errDiv);
+  setTimeout(() => errDiv.remove(), 6000);
+}
+
+// ═══════════════════════════════════════
+// GSAP SPARKLE ANIMATION (well SVG)
+// ═══════════════════════════════════════
+gsap.to('#sparkle-group circle', {
+  opacity: 0.05,
+  duration: 1.2,
+  stagger: 0.25,
+  repeat: -1,
+  yoyo: true,
+  ease: 'sine.inOut'
+});
+
+// Water ripple / glow pulse
+gsap.to('#water-glow-anim', {
+  attr: { rx: 86, ry: 14 },
+  opacity: 0.7,
+  duration: 2.2,
+  repeat: -1,
+  yoyo: true,
+  ease: 'sine.inOut'
+});
+
+// Inner well light pulse
+gsap.to('#well-inner-light', {
+  opacity: 0.5,
+  duration: 3,
+  repeat: -1,
+  yoyo: true,
+  ease: 'sine.inOut'
+});
+
+// ═══════════════════════════════════════
+// ENTRANCE ANIMATIONS
+// ═══════════════════════════════════════
+window.addEventListener('load', () => {
+  gsap.from('.hero-title', { y: -30, opacity: 0, duration: 1, ease: 'power3.out', delay: 0.3 });
+  gsap.from('.hero-sub', { y: -20, opacity: 0, duration: 1, ease: 'power3.out', delay: 0.6 });
+  gsap.from('.level-card', { x: -30, opacity: 0, duration: 0.7, stagger: 0.15, ease: 'power3.out', delay: 0.8 });
+  gsap.from('.well-container', { scale: 0.8, opacity: 0, duration: 1, ease: 'back.out(1.5)', delay: 0.5 });
+  gsap.from('.wish-form-panel', { x: 30, opacity: 0, duration: 0.8, ease: 'power3.out', delay: 0.9 });
+  gsap.from('#draggable-coin', { y: -40, opacity: 0, duration: 0.8, ease: 'bounce.out', delay: 1.2 });
+});
+</script>
+
+</body>
+</html>
