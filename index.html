@@ -70,10 +70,25 @@ canvas#stars{position:fixed;inset:0;z-index:0;pointer-events:none}
   box-shadow:0 0 0 3px #C89A18,0 0 40px rgba(255,215,0,1),0 0 80px rgba(212,175,55,.75);
   transform:scale(1.22);
 }
+.logo-wrap{
+  display:inline-block;
+  border-radius:50%;
+  overflow:hidden;
+  box-shadow:0 0 0 3px rgba(200,154,24,.7),0 0 28px rgba(212,175,55,.95),0 0 60px rgba(212,175,55,.5);
+  animation:logoFloat 3s ease-in-out infinite;
+  transition:box-shadow .4s,transform .5s cubic-bezier(.34,1.56,.64,1);
+  /* Dark background so the bronze coin is visible */
+  background:#1a1008;
+}
+.logo-wrap.pulse{
+  box-shadow:0 0 0 3px #C89A18,0 0 40px rgba(255,215,0,1),0 0 80px rgba(212,175,55,.75);
+  transform:scale(1.22);
+}
 .logo-img{
   display:block;width:118px;height:118px;
   border-radius:50%;object-fit:cover;
-  filter:brightness(1.02) saturate(1.05);
+  /* Boost brightness so coin details pop on dark bg */
+  filter:brightness(1.15) saturate(1.2) contrast(1.08);
 }
 @keyframes logoFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
 .hero-title{
@@ -346,7 +361,7 @@ canvas#stars{position:fixed;inset:0;z-index:0;pointer-events:none}
 <!-- ══ HEADER ══ -->
 <header class="site-header">
   <div class="logo-wrap" id="logo-wrap">
-    <img src="LOGO.jpg" alt="6-7 WISH Logo" class="logo-img" id="logo-img">
+    <img src="LOGO.png" alt="6-7 WISH Logo" class="logo-img" id="logo-img">
   </div>
   <h1 class="hero-title">Your Wish Starts Here</h1>
   <p class="hero-sub">Drag the golden coin into the well to make your wish</p>
