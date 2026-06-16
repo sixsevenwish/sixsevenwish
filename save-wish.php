@@ -1,109 +1,693 @@
-<?php
-// api/save-wish.php
-// 6-7 Wish — Save wish to database
-// Milkox Group LLC
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>6-7 Wish | Your Digital Wishing Well</title>
+<meta name="description" content="Make your wish at the 6-7 Digital Wishing Well.">
+<script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','GA_MEASUREMENT_ID');</script>
+<script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','META_PIXEL_ID');fbq('track','PageView');</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Cinzel+Decorative:wght@400;700;900&family=Crimson+Text:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:radial-gradient(ellipse at 50% 0%,#1a3a7a 0%,#0D1B3D 42%,#060E22 100%);color:#fff;font-family:'Crimson Text',Georgia,serif;min-height:100vh;overflow-x:hidden;user-select:none}
+canvas#stars{position:fixed;inset:0;z-index:0;pointer-events:none}
+#flash{position:fixed;inset:0;z-index:500;pointer-events:none;opacity:0;background:radial-gradient(circle at 50% 40%,rgba(255,215,0,.9),transparent 70%)}
+#top-border{position:fixed;top:0;left:0;right:0;z-index:100;height:6px;background:linear-gradient(90deg,transparent,#5a3800,#C89A18,#FFD700,#FFE860,#FFD700,#C89A18,#5a3800,transparent);box-shadow:0 0 20px rgba(212,175,55,.7)}
+#app{position:relative;z-index:1;min-height:100vh;display:flex;flex-direction:column;padding-top:10px}
 
-header('Content-Type: application/json');
-header('Access-Control-Allow-Origin: https://www.sixsevenwish.com');
-header('Access-Control-Allow-Methods: POST');
+/* HEADER */
+.site-header{text-align:center;padding:14px 1rem 6px;flex-shrink:0}
+.logo-wrap{display:inline-block;border-radius:50%;overflow:hidden;background:#1a1008;
+  box-shadow:0 0 0 3px rgba(200,154,24,.7),0 0 28px rgba(212,175,55,.9),0 0 55px rgba(212,175,55,.45);
+  animation:logoFloat 3s ease-in-out infinite;transition:transform .5s,box-shadow .4s}
+.logo-wrap.pulse{transform:scale(1.22)!important;box-shadow:0 0 0 3px #C89A18,0 0 40px gold,0 0 80px rgba(212,175,55,.75)}
+.logo-img{display:block;width:110px;height:110px;border-radius:50%;object-fit:cover;filter:brightness(1.12) saturate(1.15) contrast(1.08)}
+@keyframes logoFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.hero-title{font-family:'Cinzel Decorative',serif;font-size:clamp(1.2rem,4.5vw,2rem);font-weight:900;
+  background:linear-gradient(180deg,#fff9d0,#FFD700 40%,#B88A10);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  margin:.3rem 0 .1rem;filter:drop-shadow(0 0 10px rgba(212,175,55,.4))}
+.hero-sub{color:rgba(255,255,255,.6);font-style:italic;font-size:clamp(.75rem,2vw,.9rem)}
 
-// ── CONFIG ──
-define('DB_HOST', 'localhost');
-define('DB_NAME', 'sixsevenwish');
-define('DB_USER', 'db_user_here');
-define('DB_PASS', 'db_password_here');
+/* WELL SCENE */
+.well-scene{
+  flex:1 1 auto;display:flex;align-items:center;justify-content:center;
+  position:relative;z-index:10;padding:0 1rem;
+  min-height:320px;
+}
+#scene-wrap{
+  position:relative;
+  width:min(380px,96vw);
+  margin:0 auto;
+}
+#well-svg-wrap{width:100%}
+#well-svg-wrap svg{width:100%;height:auto;display:block;overflow:visible}
 
-// ── CSRF / METHOD CHECK ──
-if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    http_response_code(405);
-    echo json_encode(['error' => 'Method not allowed']);
-    exit;
+/* COIN — positioned absolutely over well opening */
+#coin-wrap{
+  position:absolute;
+  /* Right side of the well rim, near the water */
+  right:-2%;
+  top:22%;
+  width:72px;height:72px;
+  cursor:pointer;
+  z-index:30;
+  animation:coinBob 2.5s ease-in-out infinite;
+  filter:drop-shadow(0 0 14px rgba(200,150,30,.95)) drop-shadow(-2px 4px 10px rgba(100,60,0,.7));
+  touch-action:none;
+  -webkit-user-select:none;
+}
+#coin-wrap.dragging{animation:none;cursor:grabbing;filter:drop-shadow(0 0 28px gold)}
+@keyframes coinBob{0%,100%{transform:translateY(0) rotate(-3deg)}50%{transform:translateY(-10px) rotate(3deg)}}
+
+.drag-hint{
+  text-align:center;margin-top:.4rem;
+  font-family:'Cinzel',serif;font-size:.58rem;letter-spacing:3px;text-transform:uppercase;
+  color:rgba(212,175,55,.7);animation:shimmer 2s ease-in-out infinite;
+}
+@keyframes shimmer{0%,100%{opacity:.5}50%{opacity:1}}
+.particle{position:fixed;border-radius:50%;pointer-events:none;z-index:200;animation:pFly 1.3s ease-out forwards}
+@keyframes pFly{0%{opacity:1;transform:translate(0,0) scale(1)}100%{opacity:0;transform:var(--tp) scale(.1)}}
+
+/* ABOUT & FOOTER */
+.about-section{max-width:640px;margin:0 auto;padding:1.5rem 1.2rem;text-align:center}
+.about-section h2{font-family:'Cinzel',serif;font-size:1.3rem;font-weight:700;color:#D4AF37;margin-bottom:.85rem}
+.about-section p{font-size:1rem;color:rgba(255,255,255,.68);line-height:1.8;margin-bottom:.75rem}
+.entertain-badge{display:inline-block;background:rgba(212,175,55,.1);border:1px solid rgba(212,175,55,.38);border-radius:20px;padding:.35rem 1.1rem;font-family:'Cinzel',serif;font-size:.68rem;letter-spacing:2px;text-transform:uppercase;color:#D4AF37;margin-top:.3rem}
+.gold-div{display:flex;align-items:center;gap:1rem;max-width:400px;margin:0 auto .5rem;padding:0 1rem}
+.gold-div::before,.gold-div::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,#D4AF37,transparent)}
+.site-footer{background:rgba(6,14,34,.95);border-top:1px solid rgba(212,175,55,.2);padding:2.5rem 1.2rem 1.5rem;text-align:center;margin-top:.5rem}
+.footer-brand{font-family:'Cinzel Decorative',serif;font-size:1.4rem;font-weight:900;background:linear-gradient(180deg,#FFD700,#D4AF37);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:1rem}
+.footer-links{display:flex;flex-wrap:wrap;justify-content:center;gap:.4rem 1.5rem;margin-bottom:1.2rem}
+.footer-links a{font-family:'Cinzel',serif;font-size:.66rem;letter-spacing:2px;text-transform:uppercase;color:rgba(212,175,55,.7);text-decoration:none}
+.footer-info{font-size:.82rem;color:rgba(255,255,255,.5);line-height:1.9;margin-bottom:1.2rem}
+.footer-info a{color:rgba(212,175,55,.7);text-decoration:none}
+.footer-disc{font-size:.7rem;color:rgba(255,255,255,.28);max-width:660px;margin:0 auto;line-height:1.6;border-top:1px solid rgba(212,175,55,.1);padding-top:1.2rem}
+
+/* MODALS */
+.modal-overlay{position:fixed;inset:0;z-index:300;background:rgba(6,14,34,.94);backdrop-filter:blur(14px);display:none;align-items:center;justify-content:center;padding:1rem}
+.modal-overlay.open{display:flex}
+.modal-box{background:linear-gradient(135deg,#0c1a3a,#172e6a);border:2px solid #D4AF37;border-radius:22px;padding:1.8rem 1.5rem;max-width:390px;width:100%;position:relative;box-shadow:0 0 80px rgba(212,175,55,.38);animation:modalIn .45s cubic-bezier(.34,1.56,.64,1)}
+.modal-box::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,transparent,#FFD700,transparent);border-radius:22px 22px 0 0}
+@keyframes modalIn{from{transform:scale(.6) translateY(16px);opacity:0}to{transform:scale(1) translateY(0);opacity:1}}
+.modal-title{font-family:'Cinzel Decorative',serif;font-size:1.15rem;font-weight:900;color:#FFD700;margin-bottom:.55rem;text-align:center}
+.modal-sub{color:rgba(255,255,255,.75);font-style:italic;font-size:.88rem;line-height:1.65;margin-bottom:1rem;text-align:center}
+.modal-disc{font-size:.68rem;color:rgba(255,255,255,.28);line-height:1.55;margin-bottom:.8rem;text-align:center}
+.amount-badge{background:rgba(212,175,55,.1);border:1px solid rgba(212,175,55,.38);border-radius:11px;padding:.7rem 1rem;margin-bottom:1.1rem;font-family:'Cinzel',serif;font-size:.88rem;color:#FFD700;letter-spacing:1.5px;text-transform:uppercase;font-weight:700;text-align:center}
+
+/* LEVEL CARDS */
+.level-card{background:rgba(255,255,255,.04);border:1.5px solid rgba(212,175,55,.25);border-radius:11px;padding:.65rem 1rem;display:flex;justify-content:space-between;align-items:center;cursor:pointer;transition:all .2s;margin-bottom:.45rem}
+.level-card:hover,.level-card:active{background:linear-gradient(135deg,rgba(13,27,61,.98),rgba(212,175,55,.2));border-color:#FFD700;box-shadow:0 0 16px rgba(255,215,0,.32)}
+.level-name{font-family:'Cinzel',serif;font-size:.78rem;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.8)}
+.level-desc{font-size:.7rem;color:rgba(255,255,255,.4);font-style:italic}
+.level-price{font-family:'Cinzel Decorative',serif;font-size:1.5rem;font-weight:900;color:#FFD700;filter:drop-shadow(0 0 5px rgba(255,215,0,.5));margin-left:1rem}
+
+/* BUTTONS */
+.btn-gold{display:block;width:100%;padding:.95rem;background:linear-gradient(135deg,#6a4200,#C89A18,#FFD700,#E8C030,#C89A18,#6a4200);border:2px solid #FFD700;border-radius:11px;color:#060E22;font-family:'Cinzel',serif;font-size:.88rem;font-weight:700;letter-spacing:2.5px;text-transform:uppercase;cursor:pointer;animation:pulseBtn 1.9s ease-in-out infinite;margin-bottom:.75rem}
+@keyframes pulseBtn{0%,100%{box-shadow:0 0 0 0 rgba(255,215,0,.8)}55%{box-shadow:0 0 0 14px rgba(255,215,0,0)}}
+.btn-link{background:transparent;border:none;color:rgba(212,175,55,.5);font-family:'Cinzel',serif;font-size:.7rem;cursor:pointer;text-decoration:underline;letter-spacing:1px;display:block;text-align:center;width:100%}
+.pp-loading{background:rgba(255,196,57,.08);border:1px dashed rgba(255,196,57,.3);border-radius:10px;padding:1rem;color:rgba(255,196,57,.7);font-size:.8rem;letter-spacing:1.5px;text-transform:uppercase;animation:shimmer 1.5s ease-in-out infinite;text-align:center}
+.pp-error{background:rgba(255,80,80,.08);border:1px solid rgba(255,80,80,.3);border-radius:10px;padding:1rem;color:#ff6b6b;font-size:.8rem;line-height:1.6;text-align:center}
+#processing{position:fixed;inset:0;z-index:400;background:rgba(6,14,34,.94);display:none;align-items:center;justify-content:center;flex-direction:column;gap:1rem}
+#processing.show{display:flex}
+.granted-stars{font-size:2.2rem;margin-bottom:.4rem;filter:drop-shadow(0 0 16px rgba(255,215,0,.8))}
+.granted-title{font-family:'Cinzel Decorative',serif;font-size:1.1rem;font-weight:900;background:linear-gradient(180deg,#fff9d0,#FFD700,#B88A10);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:.35rem;line-height:1.3;text-align:center}
+.granted-text{color:rgba(255,255,255,.68);font-style:italic;font-size:.86rem;line-height:1.55;margin-bottom:.85rem;text-align:center}
+</style>
+</head>
+<body>
+<div id="flash"></div>
+<div id="top-border"></div>
+<div id="processing">
+  <div style="font-size:3rem;animation:coinBob 1s linear infinite">🪙</div>
+  <p style="font-family:'Cinzel',serif;font-size:.95rem;letter-spacing:3px;color:#FFD700;text-transform:uppercase">Processing…</p>
+</div>
+<canvas id="stars"></canvas>
+<div id="app">
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="logo-wrap" id="logo-wrap">
+    <img src="LOGO.png" alt="6-7 WISH" class="logo-img">
+  </div>
+  <h1 class="hero-title">Your Wish Starts Here</h1>
+  <p class="hero-sub">Click the coin or drag it into the well</p>
+</header>
+
+<!-- WELL SCENE -->
+<div class="well-scene">
+  <div id="scene-wrap">
+    <div id="well-svg-wrap">
+      <svg viewBox="0 0 400 380" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <!-- Stone gradients -->
+          <linearGradient id="sLit" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#c8c0a0"/><stop offset="45%" stop-color="#9a9070"/><stop offset="100%" stop-color="#686050"/></linearGradient>
+          <linearGradient id="sMid" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#a8a080"/><stop offset="50%" stop-color="#787060"/><stop offset="100%" stop-color="#504840"/></linearGradient>
+          <linearGradient id="sDrk" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="#807870"/><stop offset="50%" stop-color="#585050"/><stop offset="100%" stop-color="#383030"/></linearGradient>
+          <linearGradient id="sSide" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#282020"/><stop offset="50%" stop-color="#504840"/><stop offset="100%" stop-color="#807060"/></linearGradient>
+          <!-- Moss -->
+          <radialGradient id="mg" cx="50%" cy="30%" r="70%"><stop offset="0%" stop-color="#80d830"/><stop offset="55%" stop-color="#409010"/><stop offset="100%" stop-color="#205008"/></radialGradient>
+          <!-- Water -->
+          <radialGradient id="wn" cx="42%" cy="38%" r="62%"><stop offset="0%" stop-color="#80d0f0"/><stop offset="40%" stop-color="#3898c8"/><stop offset="100%" stop-color="#041428"/></radialGradient>
+          <radialGradient id="wg" cx="42%" cy="38%" r="62%"><stop offset="0%" stop-color="#c0f0ff"/><stop offset="40%" stop-color="#60d0ff"/><stop offset="100%" stop-color="#041428"/></radialGradient>
+          <!-- Rim -->
+          <radialGradient id="rim" cx="35%" cy="30%" r="70%"><stop offset="0%" stop-color="#d0c8a8"/><stop offset="50%" stop-color="#989080"/><stop offset="100%" stop-color="#605850"/></radialGradient>
+          <!-- Platform -->
+          <radialGradient id="plat" cx="45%" cy="40%" r="60%"><stop offset="0%" stop-color="#706858"/><stop offset="55%" stop-color="#484038"/><stop offset="100%" stop-color="#282020"/></radialGradient>
+          <!-- Gold ring -->
+          <linearGradient id="gld" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="#7a5808"/><stop offset="30%" stop-color="#C89A18"/><stop offset="60%" stop-color="#FFD700"/><stop offset="100%" stop-color="#B08010"/></linearGradient>
+          <!-- Shadow gradients -->
+          <linearGradient id="shL" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="rgba(0,0,0,.8)"/><stop offset="50%" stop-color="rgba(0,0,0,.3)"/><stop offset="100%" stop-color="rgba(0,0,0,0)"/></linearGradient>
+          <linearGradient id="shR" x1="0%" y1="0%" x2="100%" y2="0%"><stop offset="0%" stop-color="rgba(0,0,0,0)"/><stop offset="50%" stop-color="rgba(0,0,0,.3)"/><stop offset="100%" stop-color="rgba(0,0,0,.75)"/></linearGradient>
+          <!-- Filters -->
+          <filter id="gf"><feGaussianBlur stdDeviation="4" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          <filter id="wf"><feGaussianBlur stdDeviation="12" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          <filter id="mf"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          <clipPath id="bc"><rect x="80" y="90" width="240" height="220"/></clipPath>
+        </defs>
+
+        <!-- SHADOW -->
+        <ellipse cx="200" cy="365" rx="155" ry="18" fill="rgba(0,0,0,.5)"/>
+
+        <!-- RUNE PLATFORM -->
+        <ellipse cx="200" cy="352" rx="185" ry="42" fill="#0e0c0a"/>
+        <ellipse cx="200" cy="349" rx="183" ry="40" fill="#1a1610"/>
+        <ellipse cx="200" cy="346" rx="180" ry="38" fill="url(#plat)"/>
+        <g stroke="rgba(0,0,0,.4)" stroke-width="1.2" fill="none">
+          <path d="M90,343 Q120,337 150,344 Q168,348 185,341"/>
+          <path d="M215,342 Q242,337 268,344 Q285,348 310,341"/>
+        </g>
+        <!-- Gold rune ring -->
+        <ellipse cx="200" cy="346" rx="170" ry="36" fill="none" stroke="url(#gld)" stroke-width="4"/>
+        <ellipse cx="200" cy="346" rx="167" ry="34" fill="none" stroke="rgba(0,0,0,.4)" stroke-width="1"/>
+        <!-- Rune glow dots -->
+        <g fill="#FFD060" filter="url(#gf)" opacity=".9">
+          <circle cx="200" cy="310" r="3.5"/><circle cx="368" cy="332" r="3"/><circle cx="370" cy="360" r="3"/>
+          <circle cx="200" cy="382" r="3.5"/><circle cx="30" cy="360" r="3"/><circle cx="32" cy="332" r="3"/>
+          <circle cx="300" cy="314" r="2.5"/><circle cx="100" cy="314" r="2.5"/>
+        </g>
+        <!-- Rune symbols -->
+        <g font-family="serif" font-size="12" fill="rgba(212,175,50,.7)">
+          <text x="200" y="314" text-anchor="middle">ᚠ</text>
+          <text x="310" y="328" text-anchor="middle">ᚢ</text>
+          <text x="348" y="355" text-anchor="middle">ᚦ</text>
+          <text x="310" y="375" text-anchor="middle">ᚨ</text>
+          <text x="200" y="384" text-anchor="middle">ᚱ</text>
+          <text x="90" y="375" text-anchor="middle">ᚲ</text>
+          <text x="52" y="355" text-anchor="middle">ᚷ</text>
+          <text x="90" y="328" text-anchor="middle">ᚹ</text>
+        </g>
+
+        <!-- BASE RING -->
+        <ellipse cx="200" cy="310" rx="148" ry="32" fill="#0a0808"/>
+        <ellipse cx="200" cy="307" rx="146" ry="30" fill="#181410"/>
+        <ellipse cx="200" cy="304" rx="144" ry="28" fill="#302820"/>
+        <ellipse cx="200" cy="301" rx="142" ry="26" fill="#504030"/>
+        <!-- Moss on base -->
+        <ellipse cx="120" cy="298" rx="25" ry="8" fill="url(#mg)" opacity=".9" filter="url(#mf)"/>
+        <ellipse cx="284" cy="296" rx="22" ry="7" fill="url(#mg)" opacity=".85" filter="url(#mf)"/>
+        <ellipse cx="180" cy="303" rx="15" ry="5" fill="url(#mg)" opacity=".7" filter="url(#mf)"/>
+        <ellipse cx="228" cy="302" rx="13" ry="4.5" fill="url(#mg)" opacity=".65" filter="url(#mf)"/>
+
+        <!-- STONE BARREL — 3 rows, front face -->
+        <!-- Row bottom -->
+        <rect x="82" y="248" width="236" height="50" fill="#0c0a08"/>
+        <polygon points="83,249 122,246 125,297 85,299" fill="url(#sDrk)" stroke="#080604" stroke-width=".8"/>
+        <polygon points="126,246 168,244 171,297 128,299" fill="url(#sMid)" stroke="#080604" stroke-width=".8"/>
+        <polygon points="172,245 212,243 215,297 174,298" fill="url(#sDrk)" stroke="#080604" stroke-width=".8"/>
+        <polygon points="216,244 256,243 259,297 218,298" fill="url(#sMid)" stroke="#080604" stroke-width=".8"/>
+        <polygon points="260,244 300,245 303,297 262,298" fill="url(#sDrk)" stroke="#080604" stroke-width=".8"/>
+        <polygon points="304,246 318,249 318,297 306,298" fill="url(#sSide)" stroke="#080604" stroke-width=".8" opacity=".7"/>
+        <line x1="126" y1="244" x2="128" y2="299" stroke="rgba(0,0,0,.6)" stroke-width="1.5"/>
+        <line x1="172" y1="243" x2="174" y2="298" stroke="rgba(0,0,0,.6)" stroke-width="1.5"/>
+        <line x1="216" y1="243" x2="218" y2="298" stroke="rgba(0,0,0,.5)" stroke-width="1.5"/>
+        <line x1="260" y1="243" x2="262" y2="298" stroke="rgba(0,0,0,.6)" stroke-width="1.5"/>
+        <line x1="304" y1="245" x2="306" y2="298" stroke="rgba(0,0,0,.5)" stroke-width="1.5"/>
+        <line x1="83" y1="249" x2="122" y2="246" stroke="rgba(210,205,180,.38)" stroke-width="1.8"/>
+        <line x1="172" y1="245" x2="212" y2="243" stroke="rgba(210,205,180,.38)" stroke-width="1.8"/>
+        <line x1="260" y1="244" x2="300" y2="245" stroke="rgba(210,205,180,.35)" stroke-width="1.8"/>
+        <ellipse cx="148" cy="246" rx="18" ry="6" fill="url(#mg)" opacity=".85" filter="url(#mf)"/>
+        <ellipse cx="278" cy="244" rx="20" ry="6.5" fill="url(#mg)" opacity=".8" filter="url(#mf)"/>
+
+        <!-- Row middle -->
+        <rect x="80" y="196" width="240" height="52" fill="#0e0c0a"/>
+        <polygon points="81,197 124,194 127,248 83,250" fill="url(#sMid)" stroke="#080604" stroke-width=".8"/>
+        <polygon points="128,194 172,192 175,248 130,249" fill="url(#sLit)" stroke="#080604" stroke-width=".8"/>
+        <polygon points="176,193 216,191 219,248 178,249" fill="url(#sMid)" stroke="#080604" stroke-width=".8"/>
+        <polygon points="220,192 262,191 265,248 222,249" fill="url(#sLit)" stroke="#080604" stroke-width=".8"/>
+        <polygon points="266,192 310,193 312,248 268,249" fill="url(#sMid)" stroke="#080604" stroke-width=".8"/>
+        <polygon points="311,194 320,197 320,248 313,249" fill="url(#sSide)" stroke="#080604" stroke-width=".8" opacity=".65"/>
+        <line x1="128" y1="192" x2="130" y2="249" stroke="rgba(0,0,0,.6)" stroke-width="1.5"/>
+        <line x1="176" y1="191" x2="178" y2="249" stroke="rgba(0,0,0,.6)" stroke-width="1.5"/>
+        <line x1="220" y1="191" x2="222" y2="249" stroke="rgba(0,0,0,.5)" stroke-width="1.5"/>
+        <line x1="266" y1="191" x2="268" y2="249" stroke="rgba(0,0,0,.6)" stroke-width="1.5"/>
+        <line x1="81" y1="197" x2="124" y2="194" stroke="rgba(215,210,185,.44)" stroke-width="2"/>
+        <line x1="128" y1="194" x2="172" y2="192" stroke="rgba(215,210,185,.48)" stroke-width="2.2"/>
+        <line x1="220" y1="192" x2="262" y2="191" stroke="rgba(215,210,185,.44)" stroke-width="2"/>
+        <ellipse cx="155" cy="193" rx="22" ry="7.5" fill="url(#mg)" opacity=".9" filter="url(#mf)"/>
+        <ellipse cx="290" cy="192" rx="20" ry="7" fill="url(#mg)" opacity=".85" filter="url(#mf)"/>
+        <ellipse cx="96" cy="196" rx="13" ry="4.5" fill="url(#mg)" opacity=".7" filter="url(#mf)"/>
+
+        <!-- Row top -->
+        <rect x="78" y="144" width="244" height="52" fill="#100e0c"/>
+        <polygon points="79,145 126,142 129,196 81,198" fill="url(#sLit)" stroke="#080604" stroke-width=".8"/>
+        <polygon points="130,142 176,140 179,196 132,197" fill="url(#sMid)" stroke="#080604" stroke-width=".8"/>
+        <polygon points="180,141 220,139 223,196 182,197" fill="url(#sLit)" stroke="#080604" stroke-width=".8"/>
+        <polygon points="224,140 268,139 271,196 226,197" fill="url(#sMid)" stroke="#080604" stroke-width=".8"/>
+        <polygon points="272,140 316,141 318,196 274,197" fill="url(#sLit)" stroke="#080604" stroke-width=".8"/>
+        <polygon points="317,142 322,146 322,196 319,197" fill="url(#sSide)" stroke="#080604" stroke-width=".8" opacity=".6"/>
+        <line x1="130" y1="140" x2="132" y2="197" stroke="rgba(0,0,0,.6)" stroke-width="1.5"/>
+        <line x1="180" y1="139" x2="182" y2="197" stroke="rgba(0,0,0,.6)" stroke-width="1.5"/>
+        <line x1="224" y1="139" x2="226" y2="197" stroke="rgba(0,0,0,.55)" stroke-width="1.5"/>
+        <line x1="272" y1="139" x2="274" y2="197" stroke="rgba(0,0,0,.6)" stroke-width="1.5"/>
+        <line x1="79" y1="145" x2="126" y2="142" stroke="rgba(222,217,192,.52)" stroke-width="2.5"/>
+        <line x1="130" y1="142" x2="176" y2="140" stroke="rgba(222,217,192,.55)" stroke-width="2.8"/>
+        <line x1="180" y1="141" x2="220" y2="139" stroke="rgba(222,217,192,.52)" stroke-width="2.5"/>
+        <line x1="224" y1="140" x2="268" y2="139" stroke="rgba(222,217,192,.5)" stroke-width="2.5"/>
+        <line x1="272" y1="140" x2="316" y2="141" stroke="rgba(222,217,192,.48)" stroke-width="2.2"/>
+        <!-- Heavy moss top row -->
+        <ellipse cx="162" cy="141" rx="30" ry="10" fill="url(#mg)" opacity=".97" filter="url(#mf)"/>
+        <ellipse cx="296" cy="140" rx="28" ry="9.5" fill="url(#mg)" opacity=".93" filter="url(#mf)"/>
+        <ellipse cx="96" cy="144" rx="18" ry="6" fill="url(#mg)" opacity=".82" filter="url(#mf)"/>
+        <ellipse cx="228" cy="139" rx="20" ry="7" fill="url(#mg)" opacity=".75" filter="url(#mf)"/>
+
+        <!-- Left/right cylinder shading -->
+        <rect x="78" y="144" width="50" height="158" fill="url(#shL)" clip-path="url(#bc)"/>
+        <rect x="272" y="144" width="50" height="158" fill="url(#shR)" clip-path="url(#bc)"/>
+
+        <!-- TOP RIM -->
+        <ellipse cx="200" cy="152" rx="136" ry="30" fill="rgba(0,0,0,.65)"/>
+        <ellipse cx="200" cy="149" rx="134" ry="28" fill="#0c0a08"/>
+        <ellipse cx="200" cy="147" rx="132" ry="27" fill="#1e1810"/>
+        <ellipse cx="200" cy="145" rx="130" ry="26" fill="#342c18"/>
+        <ellipse cx="200" cy="143" rx="128" ry="25" fill="#4a4028"/>
+        <ellipse cx="200" cy="141" rx="126" ry="24" fill="url(#rim)"/>
+        <!-- Rim highlight -->
+        <ellipse cx="172" cy="134" rx="50" ry="10" fill="rgba(235,230,205,.32)"/>
+        <ellipse cx="158" cy="131" rx="24" ry="5.5" fill="rgba(248,243,222,.25)"/>
+        <ellipse cx="200" cy="141" rx="126" ry="24" fill="none" stroke="rgba(170,160,130,.5)" stroke-width="1.5"/>
+        <!-- Rim moss heavy -->
+        <ellipse cx="142" cy="134" rx="32" ry="11" fill="url(#mg)" opacity=".97" filter="url(#mf)"/>
+        <ellipse cx="270" cy="131" rx="28" ry="10" fill="url(#mg)" opacity=".93" filter="url(#mf)"/>
+        <ellipse cx="200" cy="127" rx="22" ry="8" fill="url(#mg)" opacity=".76" filter="url(#mf)"/>
+        <ellipse cx="170" cy="139" rx="14" ry="5.5" fill="url(#mg)" opacity=".7" filter="url(#mf)"/>
+        <ellipse cx="236" cy="138" rx="16" ry="6" fill="url(#mg)" opacity=".78" filter="url(#mf)"/>
+
+        <!-- INTERIOR & WATER -->
+        <ellipse cx="200" cy="141" rx="118" ry="22" fill="#060608"/>
+        <ellipse cx="200" cy="141" rx="112" ry="20" fill="#08080c"/>
+        <ellipse cx="200" cy="142" rx="106" ry="18" fill="url(#wn)" id="water-el"/>
+        <ellipse cx="178" cy="138" rx="32" ry="6" fill="rgba(200,245,255,.4)"/>
+        <ellipse cx="222" cy="144" rx="25" ry="4.5" fill="rgba(150,215,255,.28)"/>
+        <ellipse cx="192" cy="144" rx="16" ry="3.5" fill="rgba(255,255,255,.18)"/>
+        <ellipse cx="200" cy="142" rx="106" ry="18" fill="rgba(80,220,255,.7)" filter="url(#wf)" id="water-glow" opacity="0"/>
+
+        <!-- Light ray -->
+        <polygon points="188,0 212,0 218,142 182,142" fill="rgba(255,215,80,.055)"/>
+
+        <!-- Sparkles -->
+        <g id="sparkles" fill="#FFD060" filter="url(#gf)" opacity=".85">
+          <circle cx="65" cy="132" r="3"/><circle cx="338" cy="126" r="2.8"/>
+          <circle cx="118" cy="95" r="2.5"/><circle cx="285" cy="92" r="2.5"/>
+          <circle cx="200" cy="72" r="2.8"/><circle cx="70" cy="175" r="2"/>
+          <circle cx="330" cy="170" r="2"/>
+        </g>
+      </svg>
+    </div>
+
+    <!-- COIN — positioned over well rim right side -->
+    <div id="coin-wrap" title="Click or drag into the well">
+      <svg viewBox="0 0 110 110" width="72" height="72" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="cf" cx="38%" cy="32%" r="66%">
+            <stop offset="0%"   stop-color="#a09060"/><stop offset="18%"  stop-color="#7a6840"/>
+            <stop offset="38%"  stop-color="#5a4c28"/><stop offset="58%"  stop-color="#483c18"/>
+            <stop offset="78%"  stop-color="#382c0e"/><stop offset="100%" stop-color="#241c06"/>
+          </radialGradient>
+          <radialGradient id="cp" cx="50%" cy="50%" r="50%">
+            <stop offset="0%"   stop-color="#5a9888"/><stop offset="100%" stop-color="#1c3828"/>
+          </radialGradient>
+          <linearGradient id="cg" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%"   stop-color="#f0d060"/><stop offset="40%"  stop-color="#c89020"/>
+            <stop offset="100%" stop-color="#8a5c08"/>
+          </linearGradient>
+          <linearGradient id="cr" x1="10%" y1="10%" x2="90%" y2="90%">
+            <stop offset="0%"   stop-color="#c09838"/><stop offset="50%"  stop-color="#b88828"/>
+            <stop offset="100%" stop-color="#5a4808"/>
+          </linearGradient>
+          <filter id="cf2"><feGaussianBlur stdDeviation="3.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+          <filter id="cr2" x="-8%" y="-8%" width="116%" height="116%">
+            <feGaussianBlur in="SourceAlpha" stdDeviation="1.8" result="bl"/>
+            <feOffset dx="1.5" dy="2.5" result="off"/>
+            <feFlood flood-color="#0e0800" flood-opacity=".8" result="col"/>
+            <feComposite in="col" in2="off" operator="in" result="shd"/>
+            <feMerge><feMergeNode in="shd"/><feMergeNode in="SourceGraphic"/></feMerge>
+          </filter>
+          <clipPath id="cc"><circle cx="55" cy="55" r="50"/></clipPath>
+          <path id="ca" d="M55,55 m-38,0 a38,38 0 0,1 76,0"/>
+          <path id="cb" d="M55,55 m-35,0 a35,35 0 0,0 70,0"/>
+        </defs>
+        <circle cx="55" cy="55" r="54" fill="rgba(190,140,30,.2)" filter="url(#cf2)"/>
+        <circle cx="55" cy="55" r="52" fill="#1a1006"/>
+        <circle cx="55" cy="55" r="51" fill="#2e1e08"/>
+        <circle cx="55" cy="55" r="50" fill="url(#cr)"/>
+        <circle cx="55" cy="55" r="48" fill="#1e1406"/>
+        <circle cx="55" cy="55" r="47" fill="#160e04"/>
+        <circle cx="55" cy="55" r="46" fill="url(#cf)" clip-path="url(#cc)"/>
+        <!-- Patina spots -->
+        <g clip-path="url(#cc)" opacity=".3">
+          <circle cx="32" cy="28" r="8" fill="url(#cp)"/><circle cx="78" cy="35" r="6" fill="url(#cp)"/>
+          <circle cx="28" cy="72" r="7" fill="url(#cp)"/><circle cx="80" cy="76" r="5" fill="url(#cp)"/>
+          <circle cx="55" cy="22" r="5" fill="url(#cp)"/><circle cx="55" cy="88" r="6" fill="url(#cp)"/>
+        </g>
+        <!-- Wear marks -->
+        <g clip-path="url(#cc)" stroke="rgba(0,0,0,.2)" stroke-width=".8" fill="none">
+          <line x1="22" y1="35" x2="42" y2="48"/><line x1="68" y1="25" x2="78" y2="42"/>
+          <line x1="20" y1="68" x2="38" y2="75"/>
+        </g>
+        <!-- Inner ring -->
+        <circle cx="55" cy="55" r="40" fill="none" stroke="url(#cg)" stroke-width="3.5"/>
+        <circle cx="55" cy="55" r="43" fill="none" stroke="url(#cg)" stroke-width="1.5" opacity=".5"/>
+        <!-- 6-7 WISH arc -->
+        <text font-family="Arial Black,serif" font-size="9.5" font-weight="900" fill="#0e0800" letter-spacing="3.5" clip-path="url(#cc)">
+          <textPath href="#ca" startOffset="4%">6-7  WISH</textPath></text>
+        <text font-family="Arial Black,serif" font-size="9.5" font-weight="900" fill="url(#cg)" letter-spacing="3.5" clip-path="url(#cc)">
+          <textPath href="#ca" startOffset="4%">6-7  WISH</textPath></text>
+        <!-- Bottom inscription -->
+        <text font-family="serif" font-size="7" fill="rgba(160,120,40,.55)" letter-spacing="2" clip-path="url(#cc)">
+          <textPath href="#cb" startOffset="14%">✦ CAST YOUR WISH ✦</textPath></text>
+        <!-- Center COIN text -->
+        <g clip-path="url(#cc)" filter="url(#cr2)">
+          <circle cx="55" cy="55" r="22" fill="none" stroke="url(#cg)" stroke-width="2"/>
+          <text x="57" y="60" font-family="Arial Black,serif" font-size="13" font-weight="900" fill="#0e0800" text-anchor="middle" opacity=".9">COIN</text>
+          <text x="55" y="58" font-family="Arial Black,serif" font-size="13" font-weight="900" fill="url(#cg)" text-anchor="middle">COIN</text>
+          <circle cx="28" cy="55" r="3.5" fill="url(#cg)"/><circle cx="82" cy="55" r="3.5" fill="url(#cg)"/>
+          <circle cx="55" cy="28" r="3" fill="url(#cg)"/>
+          <g transform="translate(55,82)">
+            <circle cx="0" cy="0" r="3.5" fill="url(#cg)"/>
+            <circle cx="-7" cy="-3" r="2.5" fill="url(#cg)"/>
+            <circle cx="7" cy="-3" r="2.5" fill="url(#cg)"/>
+          </g>
+        </g>
+        <!-- Highlight -->
+        <ellipse cx="42" cy="36" rx="14" ry="9" fill="rgba(220,190,100,.15)" transform="rotate(-25,42,36)" clip-path="url(#cc)"/>
+      </svg>
+    </div>
+
+    <p class="drag-hint" id="drag-hint">✦ Click the coin or drag it into the well ✦</p>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about-section">
+  <div class="gold-div"><span style="color:#D4AF37">✦</span></div>
+  <h2>The Magic of the Well</h2>
+  <p>The 6-7 Wishing Well has been a place of wonder for dreamers, hopeful hearts, and those who believe in the power of intention. Every coin dropped carries a story — a hope for love, health, prosperity, or peace.</p>
+  <p>Cast your wish into the waters of possibility. The well listens.</p>
+  <span class="entertain-badge">✦ Digital Entertainment Experience ✦</span>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-brand">6·7 Wish</div>
+  <nav class="footer-links">
+    <a href="/privacy-policy.html">Privacy Policy</a>
+    <a href="/terms-of-service.html">Terms of Service</a>
+    <a href="/refund-policy.html">Refund Policy</a>
+    <a href="mailto:support@sixsevenwish.com">Contact</a>
+  </nav>
+  <div class="footer-info">
+    <p>© 2026 Milkox Group LLC. All rights reserved.</p>
+    <p>Official Website: <a href="https://www.sixsevenwish.com">www.sixsevenwish.com</a></p>
+    <p>Support: <a href="mailto:support@sixsevenwish.com">support@sixsevenwish.com</a></p>
+    <p>This website is owned and operated by Milkox Group LLC.<br>North Miami Beach, FL 94043, United States.</p>
+  </div>
+  <div class="footer-disc">This site provides digital entertainment services only. No specific results are guaranteed and this service does not constitute professional advice of any kind. This website is not part of Facebook, Instagram, or Meta Platforms, Inc. and is not endorsed by Meta in any way.</div>
+</footer>
+</div><!-- #app -->
+
+<!-- MODAL 1: BUY COINS -->
+<div class="modal-overlay" id="modal-buy">
+  <div class="modal-box">
+    <div style="font-size:2.5rem;text-align:center;margin-bottom:.55rem">🪙</div>
+    <p class="modal-title">Recharge Your Coins</p>
+    <p class="modal-sub">Choose your wish level — payment opens immediately.</p>
+    <div class="level-card" onclick="goPayPal('hope','Hope Wish',3)">
+      <div><div class="level-name">Hope Wish</div><div class="level-desc">A spark of possibility</div></div>
+      <div class="level-price">$3</div>
+    </div>
+    <div class="level-card" onclick="goPayPal('dream','Dream Wish',5)">
+      <div><div class="level-name">Dream Wish</div><div class="level-desc">Where dreams take flight</div></div>
+      <div class="level-price">$5</div>
+    </div>
+    <div class="level-card" onclick="goPayPal('destiny','Destiny Wish',12)">
+      <div><div class="level-name">Destiny Wish</div><div class="level-desc">Align with your destiny</div></div>
+      <div class="level-price">$12</div>
+    </div>
+    <br>
+    <button class="btn-link" onclick="closeModals()">← Cancel</button>
+  </div>
+</div>
+
+<!-- MODAL 2: PAYPAL -->
+<div class="modal-overlay" id="modal-paypal">
+  <div class="modal-box" style="text-align:center">
+    <div style="font-size:2.2rem;margin-bottom:.5rem">🪙</div>
+    <p class="modal-title">Complete Your Wish</p>
+    <p class="modal-sub">The well has accepted your wish. Complete your contribution to seal it forever.</p>
+    <div class="amount-badge" id="pp-amount">✦ Hope Wish — $3.00 ✦</div>
+    <div id="pp-container"><div class="pp-loading">⏳ Loading PayPal…</div></div>
+    <p class="modal-disc">By completing, you agree to our <a href="/terms-of-service.html" style="color:rgba(212,175,55,.6)">Terms of Service</a>. Digital entertainment only. All sales final.</p>
+    <button class="btn-link" onclick="showModal('modal-buy')">← Change level</button>
+  </div>
+</div>
+
+<!-- MODAL 3: GRANTED -->
+<div class="modal-overlay" id="modal-granted">
+  <div class="modal-box">
+    <div class="granted-stars">⭐✨⭐</div>
+    <p class="granted-title">Your wishes will come true soon</p>
+    <p class="granted-title" style="font-size:.95rem">Your wish has been granted</p>
+    <p class="granted-text">Your wish has been cast into the waters of possibility. The well has heard you. ✦</p>
+    <button class="btn-gold" onclick="resetScene()" style="animation:none;background:transparent;border:1.5px solid rgba(212,175,55,.5);color:rgba(212,175,55,.85);font-size:.75rem;padding:.6rem">← Cast Another Wish</button>
+  </div>
+</div>
+
+<script>
+// STARS
+(function(){
+  var c=document.getElementById('stars'),ctx=c.getContext('2d'),stars=[];
+  function init(){c.width=innerWidth;c.height=innerHeight;stars=[];for(var i=0;i<160;i++)stars.push({x:Math.random()*c.width,y:Math.random()*c.height,r:Math.random()*1.4+.4,t:Math.random()*Math.PI*2,s:Math.random()*.02+.008});}
+  function draw(){ctx.clearRect(0,0,c.width,c.height);stars.forEach(function(s){s.t+=s.s;ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fillStyle='rgba(212,175,55,'+(Math.sin(s.t)*.4+.55)+')';ctx.fill();});requestAnimationFrame(draw);}
+  addEventListener('resize',init);init();draw();
+})();
+
+// SPARKLES
+if(typeof gsap!=='undefined')gsap.to('#sparkles circle',{opacity:.08,duration:1.3,stagger:.22,repeat:-1,yoyo:true,ease:'sine.inOut'});
+
+// STATE
+var dropped=false, ppRendered=false;
+var currentLevel={id:'hope',name:'Hope Wish',amount:3};
+
+// COIN DRAG & CLICK
+var coinEl=document.getElementById('coin-wrap');
+var wellEl=document.getElementById('well-svg-wrap');
+var hint=document.getElementById('drag-hint');
+var isDrag=false,hasMoved=false,sx=0,sy=0,cx=0,cy=0;
+var floatT=0,floatAF;
+
+function floatLoop(){
+  if(isDrag||dropped){floatAF=requestAnimationFrame(floatLoop);return;}
+  floatT+=.025;
+  coinEl.style.transform='translateY('+Math.sin(floatT)*10+'px)';
+  floatAF=requestAnimationFrame(floatLoop);
+}
+floatAF=requestAnimationFrame(floatLoop);
+
+function startDrag(mx,my){
+  if(dropped)return;
+  isDrag=true;hasMoved=false;
+  sx=mx;sy=my;cx=0;cy=0;
+  coinEl.classList.add('dragging');
+  hint.style.opacity='0';
+}
+function moveDrag(mx,my){
+  if(!isDrag)return;
+  cx=mx-sx;cy=my-sy;
+  if(Math.abs(cx)>5||Math.abs(cy)>5)hasMoved=true;
+  coinEl.style.transform='translate('+cx+'px,'+cy+'px) scale(1.1)';
+}
+function endDrag(mx,my){
+  if(!isDrag)return;
+  isDrag=false;coinEl.classList.remove('dragging');
+  // Simple click (no drag) → drop
+  if(!hasMoved){doDrop();return;}
+  // Dragged: check if over well
+  var wr=wellEl.getBoundingClientRect();
+  var cr=coinEl.getBoundingClientRect();
+  var dcx=cr.left+cr.width/2, dcy=cr.top+cr.height/2;
+  var wx=wr.left+wr.width*.5, wy=wr.top+wr.height*.42;
+  if(Math.abs(dcx-wx)<wr.width*.6 && dcy<wy+wr.height*.15){
+    doDrop();
+  } else {
+    cx=0;cy=0;floatT=0;
+    coinEl.style.transform='';
+    hint.style.opacity='1';
+  }
 }
 
-// ── SANITIZE INPUT ──
-function sanitize(string $val): string {
-    return htmlspecialchars(strip_tags(trim($val)), ENT_QUOTES, 'UTF-8');
+// Mouse
+coinEl.addEventListener('mousedown',function(e){e.preventDefault();startDrag(e.clientX,e.clientY);});
+document.addEventListener('mousemove',function(e){moveDrag(e.clientX,e.clientY);});
+document.addEventListener('mouseup',function(e){endDrag(e.clientX,e.clientY);});
+// Touch
+coinEl.addEventListener('touchstart',function(e){e.preventDefault();var t=e.touches[0];startDrag(t.clientX,t.clientY);},{passive:false});
+coinEl.addEventListener('touchmove',function(e){e.preventDefault();var t=e.touches[0];moveDrag(t.clientX,t.clientY);},{passive:false});
+coinEl.addEventListener('touchend',function(e){e.preventDefault();var t=e.changedTouches[0];endDrag(t.clientX,t.clientY);},{passive:false});
+// Tap well = drop
+wellEl.addEventListener('click',function(){if(!dropped)doDrop();});
+wellEl.addEventListener('touchend',function(e){e.preventDefault();if(!dropped)doDrop();},{passive:false});
+
+// DROP
+function doDrop(){
+  if(dropped)return;
+  dropped=true;
+  hint.style.opacity='0';
+  var p=0;
+  var iv=setInterval(function(){
+    p+=.08;
+    coinEl.style.opacity=Math.max(0,1-p);
+    coinEl.style.transform='translate('+(cx*.85)+'px,'+(cy+p*50)+'px) scale('+Math.max(.05,1-p*.95)+')';
+    if(p>=1){clearInterval(iv);coinEl.style.display='none';triggerMagic();}
+  },16);
 }
 
-$first_name             = sanitize($_POST['first_name'] ?? '');
-$last_name              = sanitize($_POST['last_name'] ?? '');
-$wish_text              = sanitize($_POST['wish_text'] ?? '');
-$wish_level             = sanitize($_POST['wish_level'] ?? '');
-$amount                 = (float)($_POST['amount'] ?? 0);
-$paypal_transaction_id  = sanitize($_POST['paypal_transaction_id'] ?? '');
-$status                 = sanitize($_POST['status'] ?? 'PENDING');
-
-// ── VALIDATE ──
-$allowed_levels = ['hope', 'dream', 'destiny'];
-$allowed_amounts = [3.0, 5.0, 12.0];
-
-if (empty($first_name) || empty($last_name) || empty($wish_text)) {
-    http_response_code(400);
-    echo json_encode(['error' => 'Missing required fields']);
-    exit;
+function triggerMagic(){
+  // Flash
+  document.getElementById('flash').style.transition='opacity .1s';
+  document.getElementById('flash').style.opacity='1';
+  setTimeout(function(){
+    document.getElementById('flash').style.transition='opacity .7s';
+    document.getElementById('flash').style.opacity='0';
+  },120);
+  // Water glow
+  var wg=document.getElementById('water-glow');
+  if(wg){wg.style.transition='opacity .4s';wg.style.opacity='1';setTimeout(function(){wg.style.transition='opacity 1.5s';wg.style.opacity='0';},1200);}
+  // Logo pulse
+  var lw=document.getElementById('logo-wrap');
+  lw.classList.add('pulse');
+  setTimeout(function(){lw.classList.remove('pulse');},900);
+  // Particles
+  doParticles();
+  // Sound
+  doSound();
+  // Show modal after 1.8s
+  setTimeout(function(){showModal('modal-buy');},1800);
 }
 
-if (!in_array($wish_level, $allowed_levels)) {
-    http_response_code(400);
-    echo json_encode(['error' => 'Invalid wish level']);
-    exit;
+function doParticles(){
+  var wr=wellEl.getBoundingClientRect();
+  var wx=wr.left+wr.width*.5, wy=wr.top+wr.height*.4;
+  for(var i=0;i<24;i++){
+    (function(i){
+      var el=document.createElement('div');
+      el.className='particle';
+      var a=(i/24)*Math.PI*2,d=50+Math.random()*85,s=3+Math.random()*5;
+      var col=Math.random()>.45?'#FFD700':'#60d4ff';
+      el.style.cssText='width:'+s+'px;height:'+s+'px;background:'+col+';box-shadow:0 0 '+(s*2)+'px '+col+';left:'+wx+'px;top:'+wy+'px;--tp:translate('+Math.cos(a)*d+'px,'+Math.sin(a)*d+'px);';
+      document.body.appendChild(el);
+      setTimeout(function(){el.remove();},1400);
+    })(i);
+  }
 }
 
-if (!in_array($amount, $allowed_amounts)) {
-    http_response_code(400);
-    echo json_encode(['error' => 'Invalid amount']);
-    exit;
+function doSound(){
+  try{
+    var ac=new(window.AudioContext||window.webkitAudioContext)();
+    var o=ac.createOscillator(),g=ac.createGain();
+    o.connect(g);g.connect(ac.destination);
+    o.frequency.setValueAtTime(900,ac.currentTime);
+    o.frequency.exponentialRampToValueAtTime(400,ac.currentTime+.4);
+    g.gain.setValueAtTime(.25,ac.currentTime);
+    g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+.6);
+    o.start();o.stop(ac.currentTime+.6);
+  }catch(e){}
 }
 
-if (strlen($wish_text) > 300) {
-    http_response_code(400);
-    echo json_encode(['error' => 'Wish too long']);
-    exit;
+// MODALS
+function showModal(id){
+  document.querySelectorAll('.modal-overlay').forEach(function(m){m.classList.remove('open');});
+  document.getElementById(id).classList.add('open');
+}
+function closeModals(){
+  document.querySelectorAll('.modal-overlay').forEach(function(m){m.classList.remove('open');});
 }
 
-// ── COLLECT META ──
-$ip_address = $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'] ?? '';
-$ip_address = sanitize(explode(',', $ip_address)[0]);
-$country    = 'US'; // Can use IP geolocation API here
-
-// ── DATABASE ──
-try {
-    $pdo = new PDO(
-        "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4",
-        DB_USER,
-        DB_PASS,
-        [
-            PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-            PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-            PDO::ATTR_EMULATE_PREPARES => false,
-        ]
-    );
-
-    $stmt = $pdo->prepare("
-        INSERT INTO wishes
-            (first_name, last_name, wish_text, wish_level, amount, paypal_transaction_id, country, ip_address, status)
-        VALUES
-            (:first_name, :last_name, :wish_text, :wish_level, :amount, :paypal_transaction_id, :country, :ip_address, :status)
-    ");
-
-    $stmt->execute([
-        ':first_name'            => $first_name,
-        ':last_name'             => $last_name,
-        ':wish_text'             => $wish_text,
-        ':wish_level'            => $wish_level,
-        ':amount'                => $amount,
-        ':paypal_transaction_id' => $paypal_transaction_id,
-        ':country'               => $country,
-        ':ip_address'            => $ip_address,
-        ':status'                => $status,
-    ]);
-
-    $id = $pdo->lastInsertId();
-    echo json_encode(['success' => true, 'id' => $id]);
-
-} catch (PDOException $e) {
-    // Log error, don't expose to client
-    error_log('DB Error: ' . $e->getMessage());
-    http_response_code(500);
-    echo json_encode(['error' => 'Database error']);
+// GO TO PAYPAL DIRECTLY when level chosen
+function goPayPal(id,name,amount){
+  currentLevel={id:id,name:name,amount:amount};
+  document.getElementById('pp-amount').textContent='✦ '+name+' — $'+amount.toFixed(2)+' ✦';
+  showModal('modal-paypal');
+  if(!ppRendered){ppRendered=true;loadPayPal();}
 }
+
+// PAYPAL SDK
+function loadPayPal(){
+  var s=document.createElement('script');
+  s.src='https://www.paypal.com/sdk/js?client-id=ENfnaFThD2nf0YoiyfzhhiavBXa7UPHhcqgqqEs5e3-SNWFM0MMisIanP2-Z9vD1HErX7GL_wl_JRzUZ&currency=USD&intent=capture&components=buttons';
+  s.onload=function(){renderPayPal();};
+  s.onerror=function(){document.getElementById('pp-container').innerHTML='<div class="pp-error">⚠️ PayPal could not load. Check your internet connection and try again.</div>';};
+  document.head.appendChild(s);
+}
+
+function renderPayPal(){
+  document.getElementById('pp-container').innerHTML='';
+  paypal.Buttons({
+    style:{shape:'rect',color:'gold',layout:'vertical',label:'pay',height:50},
+    createOrder:function(data,actions){
+      return actions.order.create({
+        intent:'CAPTURE',
+        purchase_units:[{
+          payee:{email_address:'isradelx@gmail.com'},
+          amount:{value:currentLevel.amount.toFixed(2),currency_code:'USD'},
+          description:'6-7 Wish — '+currentLevel.name,
+          custom_id:currentLevel.id
+        }],
+        application_context:{brand_name:'6-7 Wish by Milkox Group LLC',landing_page:'BILLING',user_action:'PAY_NOW',shipping_preference:'NO_SHIPPING'}
+      });
+    },
+    onApprove:function(data,actions){
+      document.getElementById('processing').classList.add('show');
+      return actions.order.capture().then(function(d){
+        window.location.href='https://www.sixsevenwish.com/gracias.html?txn='+d.id+'&level='+currentLevel.id+'&amount='+currentLevel.amount;
+      }).catch(function(){
+        document.getElementById('processing').classList.remove('show');
+        document.getElementById('pp-container').innerHTML='<div class="pp-error">Payment failed. Please try again.</div>';
+      });
+    },
+    onCancel:function(){window.location.href='https://www.sixsevenwish.com/payment-cancelled.html';},
+    onError:function(err){console.error(err);document.getElementById('pp-container').innerHTML='<div class="pp-error">PayPal error. Please refresh and try again.</div>';}
+  }).render('#pp-container');
+}
+
+function resetScene(){
+  dropped=false;ppRendered=false;
+  coinEl.style.display='';coinEl.style.opacity='1';coinEl.style.transform='';
+  cx=0;cy=0;floatT=0;hint.style.opacity='1';
+  document.getElementById('pp-container').innerHTML='<div class="pp-loading">⏳ Loading PayPal…</div>';
+  closeModals();
+}
+
+// Entrance animation
+window.addEventListener('load',function(){
+  if(typeof gsap==='undefined')return;
+  gsap.from('.logo-wrap',{scale:0,opacity:0,duration:1.1,ease:'back.out(2)',delay:.2});
+  gsap.from('.hero-title',{y:-20,opacity:0,duration:.9,ease:'power3.out',delay:.5});
+  gsap.from('#well-svg-wrap',{scale:.85,opacity:0,duration:1,ease:'back.out(1.5)',delay:.4});
+  gsap.from('#coin-wrap',{x:30,opacity:0,duration:.8,ease:'back.out(2)',delay:1});
+});
+</script>
+</body>
+</html>
